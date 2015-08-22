@@ -20,6 +20,7 @@ function LevelScene:init()
 	
 	---- EVENTS ------
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
+	self:addEventListener(Event.KEY_DOWN, self.onKeyDown, self)
 	--self.world:addEventListener(Event.BEGIN_CONTACT, self.onBeginContact, self)
 end
 
@@ -35,6 +36,12 @@ function LevelScene:onEnterFrame(event)
 			body.object:setRotation(math.deg(body:getAngle()))
 		end
 				 
+	end
+end
+
+function LevelScene:onKeyDown(event)
+	if event.keyCode == KeyCode.BACK then 
+		sceneManager:changeScene("menu", conf.TRANSITION_TIME,  SceneManager.fade)
 	end
 end
 

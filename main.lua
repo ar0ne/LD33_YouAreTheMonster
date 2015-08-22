@@ -1,5 +1,7 @@
 require "box2d"
 
+application:setOrientation(application.LANDSCAPE_RIGHT)
+
 sceneManager = SceneManager.new({
 	["level"]  = LevelScene,
     ["menu"]   = MenuScene,    
