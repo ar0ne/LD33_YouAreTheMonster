@@ -1,4 +1,3 @@
-require "box2d"
 
 application:setOrientation(application.LANDSCAPE_RIGHT)
 
