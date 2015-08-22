@@ -4,7 +4,6 @@ function Button:init(sprite)
 
 	self:addChild(sprite)
 	
-	
 	--- EVENTS -----
 	self:addEventListener(Event.MOUSE_DOWN, self.onMouseDown, self)
 	self:addEventListener(Event.MOUSE_UP, self.onMouseUp, self)

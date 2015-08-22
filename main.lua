@@ -1,4 +1,3 @@
-
 application:setOrientation(application.LANDSCAPE_RIGHT)
 
 sceneManager = SceneManager.new({
