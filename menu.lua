@@ -2,7 +2,7 @@ MenuScene = Core.class(Sprite)
 
 function MenuScene:init()
 
-	self.bg = Bitmap.new(Texture.new("assets/images/background.png"))
+	self.bg = Bitmap.new(Texture.new("assets/images/menu_bg.png"))
 	
 	self.bg:setScale(conf.BG_SCALE, conf.BG_SCALE)
 	self.bg:setAnchorPoint(0.5, 0.5)
@@ -36,6 +36,8 @@ end
 
 function MenuScene:onKeyDown(event)
 	if event.keyCode == KeyCode.BACK then 
-		sceneManager:changeScene("menu", conf.TRANSITION_TIME,  SceneManager.fade)
+		if application:getDeviceInfo() == "Android" then
+			application:exit()
+		end
 	end
 end

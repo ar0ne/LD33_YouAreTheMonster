@@ -4,6 +4,8 @@ Background = Core.class(Sprite)
 	level - reference to parent object
 	image - background image
 	bg_scale - image scale
+	pos_x - position at the X axes of screen
+	pox_y - position at the Y axes of screen
 --]]
 
 function Background:init(options)
