@@ -1,5 +1,5 @@
 <project>
- <properties assetsOnly="0" osx_domain="giderosmobile.com" win_org="GiderosMobile" fps="60" iosDevice="0" retinaDisplay="0" windowHeight="0" architecture="0" mouseToTouch="1" mouseTouchOrder="0" logicalHeight="1920" win_domain="giderosmobile.com" orientation="3" windowWidth="0" encryptCode="0" osx_org="GiderosMobile" logicalWidth="1080" packageName="com.yourdomain.yourapp" autorotation="0" encryptAssets="0" scaleMode="0" touchToMouse="1" android_template="0">
+ <properties logicalWidth="1080" retinaDisplay="0" windowHeight="0" win_org="GiderosMobile" mouseTouchOrder="0" assetsOnly="0" orientation="3" win_domain="giderosmobile.com" touchToMouse="1" android_template="0" autorotation="0" scaleMode="0" encryptAssets="0" architecture="0" mouseToTouch="1" packageName="com.yourdomain.yourapp" encryptCode="0" logicalHeight="1920" osx_org="GiderosMobile" osx_domain="giderosmobile.com" fps="60" iosDevice="0" windowWidth="0">
   <imageScales/>
  </properties>
  <folder name="assets">
@@ -9,6 +9,7 @@
    <file source="assets/images/background.png"/>
   </folder>
  </folder>
+ <file source="background.lua"/>
  <file source="button.lua"/>
  <file source="config.lua"/>
  <file source="level.lua"/>

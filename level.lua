@@ -9,13 +9,15 @@ function LevelScene:init()
 	--self.sounds:add("point", "assets/sounds/sfx_point.mp3")
 	
 	
-	----- DEBUG ---------
-	-- [[
-	local debugDraw = b2.DebugDraw.new()
-	self.world:setDebugDraw(debugDraw)
-	self:addChild(debugDraw)
-	--]]
-	---------------------
+	self.bg = Background.new({
+		level = self,
+		image = "assets/images/background.png",
+		bg_scale = conf.LEVEL_BG_SCALE,
+		pos_x = conf.WIDTH / 2,
+		pos_y = conf.HEIGHT / 2
+	})
+	
+	self:addChild(self.bg)
 	
 	
 	---- EVENTS ------
