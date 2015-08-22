@@ -1,8 +1,7 @@
 <project>
- <properties logicalWidth="1080" retinaDisplay="0" windowHeight="0" win_org="GiderosMobile" mouseTouchOrder="0" assetsOnly="0" orientation="3" win_domain="giderosmobile.com" touchToMouse="1" android_template="0" autorotation="0" scaleMode="0" encryptAssets="0" architecture="0" mouseToTouch="1" packageName="com.yourdomain.yourapp" encryptCode="0" logicalHeight="1920" osx_org="GiderosMobile" osx_domain="giderosmobile.com" fps="60" iosDevice="0" windowWidth="0">
+ <properties assetsOnly="0" retinaDisplay="0" mouseTouchOrder="0" logicalWidth="1080" encryptCode="0" scaleMode="0" windowHeight="0" fps="60" touchToMouse="1" logicalHeight="1920" packageName="com.yourdomain.yourapp" osx_domain="giderosmobile.com" architecture="0" autorotation="0" win_org="GiderosMobile" osx_org="GiderosMobile" android_template="0" orientation="3" iosDevice="0" encryptAssets="0" win_domain="giderosmobile.com" windowWidth="0" mouseToTouch="1">
   <imageScales/>
  </properties>
- <file source="timeline.lua"/>
  <folder name="assets">
   <folder name="sounds"/>
   <folder name="images">
@@ -18,4 +17,5 @@
  <file source="menu.lua"/>
  <file source="scenemanager.lua"/>
  <file source="soundmanager.lua"/>
+ <file source="timeline.lua"/>
 </project>

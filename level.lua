@@ -17,6 +17,22 @@ function LevelScene:init()
 	
 	self:addChild(self.bg)
 	
+	local screenW = application:getDeviceHeight()
+	local screenH = application:getDeviceWidth()
+	local timelinewidth = screenW * 0.2
+	local timeLeft = Timeline.new(stage, screenW/10, screenH*0.2, timelinewidth, 20);
+	local timeRight = Timeline.new(stage, screenW-screenW/10-timelinewidth, screenH*0.2, timelinewidth, 20);
+	
+	timeLeft:start(1);
+	timeLeft:onEnd(function ()
+		timeLeft:restart(2)
+	end)
+	
+	timeRight:start(1.000000000000001);
+	timeRight:onEnd(function ()
+		timeRight:restart(2)
+	end)
+	
 	
 	---- EVENTS ------
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
