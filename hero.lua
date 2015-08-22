@@ -13,10 +13,14 @@ function Hero:init(options)
 	self.paused = true
 	self.isAttack = false
 	
+	local hero_wait_spritesheet = Texture.new("assets/images/Hero_wait.png")
+	local hero_fire_spritesheet = Texture.new("assets/images/Hero_fire.png")
+	
 	local animation = {
-		Bitmap.new(Texture.new("assets/images/Lead-character-static.png")),
-		Bitmap.new(Texture.new("assets/images/Lead-character-gunner.png")),
-		Bitmap.new(Texture.new("assets/images/Lead-character-fire.png")),
+		Bitmap.new(TextureRegion.new(hero_wait_spritesheet, 0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(hero_wait_spritesheet, 50, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(hero_fire_spritesheet, 0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(hero_fire_spritesheet, 50, 0, 50, 50)),
 	}
 	
 	for i = 1, #animation do
@@ -27,13 +31,14 @@ function Hero:init(options)
 	self.hero_mc = MovieClip.new{
 		{1, 20, animation[1]},
 		{21, 40, animation[2]},
-		{41, 60, animation[3]}
+		{41, 60, animation[3]},
+		{61, 80, animation[4]}
 	}
 	
-	self.hero_mc:setGotoAction(20, 1) -- wait 
-	self.hero_mc:setGotoAction(60, 21) -- fire
+	self.hero_mc:setGotoAction(40, 1) -- wait 
+	self.hero_mc:setGotoAction(80, 41) -- fire
 	
-	self.hero_mc:gotoAndPlay(21) -- ставлю атаку пока wait
+	self.hero_mc:gotoAndPlay(1)
 	
 	self:addChild(self.hero_mc)
 	

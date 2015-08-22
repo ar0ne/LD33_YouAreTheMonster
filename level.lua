@@ -2,7 +2,7 @@ LevelScene = Core.class(Sprite)
 
 function LevelScene:init()
 	
-	self.paused = true
+	self.paused = false
 	self.sound = SoundManager.new()
 	--self.sounds:add("point", "assets/sounds/sfx_point.mp3")
 	
@@ -28,16 +28,6 @@ function LevelScene:init()
 	self:addChild(self.hero)
 	
 	self.enemys = {}
-	for i = 1, 5 do 
-		self.enemys[i] = Enemy.new({
-			level = self,
-			pos_x = 100 + i * 50 ,
-			pos_y = conf.HEIGHT * 2 / 3,
-			enemy_scale = conf.ENEMY_SCALE,
-			direction = "right"
-		})
-		self:addChild(self.enemys[i])
-	end
 	
 	local screenW = application:getDeviceHeight()
 	local screenH = application:getDeviceWidth()
@@ -65,7 +55,7 @@ end
 function LevelScene:onEnterFrame(event)
 
 	if not self.paused then
-				 
+		self:generateRandomEnemies()
 	end
 end
 
@@ -75,5 +65,40 @@ function LevelScene:onKeyDown(event)
 	end
 end
 
+function LevelScene:generateRandomEnemies()
+	
+	local color = self:_chooseBetweenTwoValue("red", "blue")
+	local direction = self:_chooseBetweenTwoValue("right", "left")
+	
+	local pos_x
+	if direction == "right" then
+		pos_x = 100
+	else
+		pos_x = conf.WIDTH - 100
+	end
+	
+	local enemy = Enemy.new({
+		level = self,
+		pos_x = pos_x ,
+		pos_y = conf.HEIGHT * 2 / 3,
+		enemy_scale = conf.ENEMY_SCALE,
+		direction = direction,
+		color = color,
+		middle = conf.WIDTH / 2,
+		speed = math.random(conf.MIN_ENEMY_SPEED, conf.MAX_ENEMY_SPEED)
+	})
+	self:addChild(enemy)
+	
+
+end
+
+function LevelScene:_chooseBetweenTwoValue(val_1, val_2)
+
+	if math.random(0, 1000) > 500 then
+		return val_1
+	end
+	
+	return val_2
+end
 
 

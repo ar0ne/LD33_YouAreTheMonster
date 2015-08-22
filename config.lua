@@ -9,5 +9,7 @@ conf = {
 	LEVEL_BG_SCALE = 1,
 	HERO_SCALE = 4,
 	ENEMY_SCALE = 3.2,
+	MIN_ENEMY_SPEED = 0.3,
+	MAX_ENEMY_SPEED = 2.5,
 	
 }
