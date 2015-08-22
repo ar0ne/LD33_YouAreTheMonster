@@ -1,0 +1,15 @@
+<project>
+ <properties assetsOnly="0" osx_domain="giderosmobile.com" win_org="GiderosMobile" fps="60" iosDevice="0" retinaDisplay="0" windowHeight="0" architecture="0" mouseToTouch="1" mouseTouchOrder="0" logicalHeight="480" win_domain="giderosmobile.com" orientation="0" windowWidth="0" encryptCode="0" osx_org="GiderosMobile" logicalWidth="320" packageName="com.yourdomain.yourapp" autorotation="0" encryptAssets="0" scaleMode="0" touchToMouse="1" android_template="0">
+  <imageScales/>
+ </properties>
+ <folder name="assets">
+  <folder name="sounds"/>
+  <folder name="images"/>
+ </folder>
+ <file source="soundmanager.lua"/>
+ <file source="config.lua"/>
+ <file source="level.lua"/>
+ <file source="main.lua"/>
+ <file source="menu.lua"/>
+ <file source="scenemanager.lua"/>
+</project>
