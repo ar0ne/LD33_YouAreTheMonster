@@ -1,10 +1,14 @@
 <project>
- <properties assetsOnly="0" retinaDisplay="0" mouseTouchOrder="0" logicalWidth="1080" encryptCode="0" scaleMode="0" windowHeight="0" fps="60" touchToMouse="1" logicalHeight="1920" packageName="com.yourdomain.yourapp" osx_domain="giderosmobile.com" architecture="0" autorotation="0" win_org="GiderosMobile" osx_org="GiderosMobile" android_template="0" orientation="3" iosDevice="0" encryptAssets="0" win_domain="giderosmobile.com" windowWidth="0" mouseToTouch="1">
+ <properties mouseToTouch="1" logicalWidth="1080" windowHeight="0" osx_domain="giderosmobile.com" retinaDisplay="0" packageName="com.yourdomain.yourapp" scaleMode="0" architecture="0" assetsOnly="0" win_org="GiderosMobile" orientation="3" osx_org="GiderosMobile" mouseTouchOrder="0" fps="60" touchToMouse="1" iosDevice="0" windowWidth="0" win_domain="giderosmobile.com" encryptCode="0" autorotation="0" logicalHeight="1920" android_template="0" encryptAssets="0">
   <imageScales/>
  </properties>
+ <file source="gestures.lua"/>
+ <file source="easing.lua"/>
+ <file source="gtween.lua"/>
  <folder name="assets">
   <folder name="sounds"/>
   <folder name="images">
+   <file source="assets/images/level_bg_day.png"/>
    <file source="assets/images/start_button.png"/>
    <file source="assets/images/background.png"/>
   </folder>
