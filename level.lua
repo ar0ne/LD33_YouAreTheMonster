@@ -35,7 +35,25 @@ function LevelScene:init()
 	})
 	
 	self:addChild(self.score)
+	
+	self.clouds = Clouds.new({
+		level = self,
+		scale_x = conf.CLOUDS_SCALE_X,
+		scale_y = conf.CLOUDS_SCALE_Y,
+		speed   = conf.CLOUDS_SPEED,
+		screen_width = conf.WIDTH,
+	})
+	
+	--self:addChild(self.clouds)
+	
+	self.stars = Stars.new({
+		level = self,
+		scale_x = conf.STARS_SCALE_X,
+		scale_y = conf.STARS_SCALE_X_SCALE_Y,
+		alpha = conf.STARS_ALPHA
+	})
 		
+	self:addChild(self.stars)	
 	
 	local screenW = application:getDeviceHeight()
 	local screenH = application:getDeviceWidth()

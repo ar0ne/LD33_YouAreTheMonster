@@ -29,14 +29,24 @@ function Hero:init(options)
 	end
 	
 	self.hero_mc = MovieClip.new{
-		{1, 20, animation[1]},
-		{21, 40, animation[2]},
-		{41, 60, animation[3]},
-		{61, 80, animation[4]}
+		-- wait right
+		{1,  20, animation[1], {scaleX = options.hero_scale }},
+		{21, 40, animation[2], {scaleX = options.hero_scale }},
+		-- wait left
+		{41, 60, animation[1], {scaleX = -options.hero_scale }},
+		{61, 80, animation[2], {scaleX = -options.hero_scale }},
+		-- fire right
+		{81,  100, animation[3], {scaleX = options.hero_scale }},
+		{101, 120, animation[4], {scaleX = options.hero_scale }},
+		-- fire left
+		{121, 140, animation[3], {scaleX = -options.hero_scale }},
+		{141, 160, animation[4], {scaleX = -options.hero_scale}}
 	}
 	
-	self.hero_mc:setGotoAction(40, 1) -- wait 
-	self.hero_mc:setGotoAction(80, 41) -- fire
+	self.hero_mc:setGotoAction(40, 	1)  -- wait right
+	self.hero_mc:setGotoAction(80, 	41)  -- wait left
+	self.hero_mc:setGotoAction(120, 81)  -- fire right
+	self.hero_mc:setGotoAction(160, 121) -- fire left
 	
 	self.hero_mc:gotoAndPlay(1)
 	

@@ -18,6 +18,10 @@
    </folder>
   </folder>
   <folder name="images">
+   <file source="assets/images/Stars_03.png"/>
+   <file source="assets/images/Stars_02.png"/>
+   <file source="assets/images/Stars_01.png"/>
+   <file source="assets/images/Clouds.png"/>
    <file source="assets/images/Hero_wait.png"/>
    <file source="assets/images/Hero_fire.png"/>
    <file source="assets/images/AI_red_wait.png"/>
@@ -34,6 +38,7 @@
  </folder>
  <file source="background.lua"/>
  <file source="button.lua"/>
+ <file source="clouds.lua"/>
  <file source="config.lua"/>
  <file source="enemy.lua"/>
  <file source="hero.lua"/>
@@ -43,5 +48,6 @@
  <file source="scenemanager.lua"/>
  <file source="score.lua"/>
  <file source="soundmanager.lua"/>
+ <file source="stars.lua"/>
  <file source="timeline.lua"/>
 </project>
