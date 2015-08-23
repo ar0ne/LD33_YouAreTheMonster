@@ -27,7 +27,15 @@ function LevelScene:init()
 	
 	self:addChild(self.hero)
 	
-	self.enemys = {}
+	self.enemys_left = {}
+	self.enemys_right = {}
+	
+	self.score = Score.new({
+		level = self,
+	})
+	
+	self:addChild(self.score)
+		
 	
 	local screenW = application:getDeviceHeight()
 	local screenH = application:getDeviceWidth()
@@ -49,13 +57,23 @@ function LevelScene:init()
 	---- EVENTS ------
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	self:addEventListener(Event.KEY_DOWN, self.onKeyDown, self)
+	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 
 end
 
 function LevelScene:onEnterFrame(event)
 
 	if not self.paused then
-		self:generateRandomEnemies()
+		if #self.enemys_left < conf.MAX_ENEMY_COUNT then
+			local enemy = self:generateRandomEnemies("left")
+			self.enemys_left[#self.enemys_left + 1] = enemy
+			self:addChild(enemy)
+		end
+		if #self.enemys_right < conf.MAX_ENEMY_COUNT then
+			local enemy = self:generateRandomEnemies("right")
+			self.enemys_right[#self.enemys_right + 1] = enemy
+			self:addChild(enemy)
+		end 
 	end
 end
 
@@ -65,10 +83,10 @@ function LevelScene:onKeyDown(event)
 	end
 end
 
-function LevelScene:generateRandomEnemies()
+function LevelScene:generateRandomEnemies(direction)
 	
 	local color = self:_chooseBetweenTwoValue("red", "blue")
-	local direction = self:_chooseBetweenTwoValue("right", "left")
+	--local direction = self:_chooseBetweenTwoValue("right", "left")
 	
 	local pos_x
 	if direction == "right" then
@@ -85,10 +103,10 @@ function LevelScene:generateRandomEnemies()
 		direction = direction,
 		color = color,
 		middle = conf.WIDTH / 2,
-		speed = math.random(conf.MIN_ENEMY_SPEED, conf.MAX_ENEMY_SPEED)
+		speed = conf.ENEMY_SPEED
 	})
-	self:addChild(enemy)
 	
+	return enemy
 
 end
 

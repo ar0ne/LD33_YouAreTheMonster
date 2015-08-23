@@ -76,7 +76,12 @@ function Enemy:init(options)
 	}
 	
 	for i = 1, #animation do
-		animation[i]:setScale(options.enemy_scale)
+		-- if enemy move to the left then flip sprite
+		if self.direction == "right" then
+			animation[i]:setScale(  options.enemy_scale, options.enemy_scale)
+		else
+			animation[i]:setScale( -options.enemy_scale, options.enemy_scale)
+		end
 		animation[i]:setAnchorPoint(0.5, 0.5)
 	end
 	
@@ -152,7 +157,9 @@ function Enemy:init(options)
 end
 
 function Enemy:onEnterFrame(event)
+
 	if not self.paused then
+	
 		local x, y = self:getPosition()
 		if self.direction == "right" then
 			x = x + self.speed
@@ -163,10 +170,23 @@ function Enemy:onEnterFrame(event)
 		if x == self.middle then
 			-- 	сверяем цвет и режим героя
 			-- if self.color ~= self.level.hero.mode then
-			self.level:removeChild(self)		
-	
+			--	
+			
+			self:removeEnemyFromLevel(self.level.enemys_left)
+			self:removeEnemyFromLevel(self.level.enemys_right)
+			
 		end
 		
 		self:setPosition(x, y)
+	end
+end
+
+function Enemy:removeEnemyFromLevel(enemy_array)
+	for i = 1, #enemy_array do
+		if enemy_array[i] == self then
+			table.remove(enemy_array, i)
+			self.level:removeChild(self) -- getParent() doesn't work
+			break
+		end
 	end
 end
