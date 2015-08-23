@@ -2,19 +2,19 @@ MenuScene = Core.class(Sprite)
 
 function MenuScene:init()
 
-	self.bg = Bitmap.new(Texture.new("assets/images/background.png"))
+	self.bg = Bitmap.new(Texture.new("assets/images/menu_bg.png"))
 	
 	self.bg:setScale(conf.BG_SCALE, conf.BG_SCALE)
 	self.bg:setAnchorPoint(0.5, 0.5)
 	print(conf.WIDTH)
-	self.bg:setPosition(conf.WIDTH / 2, conf.HEIGHT / 2)
+	self.bg:setPosition(conf.SCREENW / 2, conf.SCREENH / 2)
 	self:addChild(self.bg)
 
 	local start_button_bitmap = Bitmap.new(Texture.new("assets/images/start_button.png"))
 	-- [[
 	start_button_bitmap:setAnchorPoint(0.5, 0.5)
 	start_button_bitmap:setScale(conf.START_BUTTON_SCALE, conf.START_BUTTON_SCALE)
-	start_button_bitmap:setPosition(conf.WIDTH / 2, conf.HEIGHT / 2)
+	start_button_bitmap:setPosition(conf.SCREENW / 2, conf.SCREENH / 2)
 	--]]
 	local start_button = Button.new(start_button_bitmap)
 
@@ -36,6 +36,8 @@ end
 
 function MenuScene:onKeyDown(event)
 	if event.keyCode == KeyCode.BACK then 
-		sceneManager:changeScene("menu", conf.TRANSITION_TIME,  SceneManager.fade)
+		if application:getDeviceInfo() == "Android" then
+			application:exit()
+		end
 	end
 end

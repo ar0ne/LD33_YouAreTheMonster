@@ -22,3 +22,4 @@ function Background:init(options)
 	self:addChild(self.image)
 
 end
+
