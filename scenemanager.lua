@@ -300,17 +300,29 @@ end
 function SceneManager:onTransitionBegin()
     if self.eventFilter then
         stage:addChild(self.transitionEventCatcher)
-        for i,event in ipairs(self.eventFilter) do
+        --[[
+		for i,event in ipairs(self.eventFilter) do
             self.transitionEventCatcher:addEventListener(event, self.filterTransitionEvents, self)
         end
+		--]]
+		for i = 1, #self.eventFilter do
+			local event = self.eventFilter[i]
+			self.transitionEventCatcher:addEventListener(event, self.filterTransitionEvents, self)
+		end
     end
 end
 
 function SceneManager:onTransitionEnd()
     if self.eventFilter then
-            for i,event in ipairs(self.eventFilter) do
+		--[[
+        for i,event in ipairs(self.eventFilter) do
             self.transitionEventCatcher:removeEventListener(event, self.filterTransitionEvents, self)
         end
+		--]]
+		for i = 1, #self.eventFilter do
+			local event = self.eventFilter[i]
+			self.transitionEventCatcher:removeEventListener(event, self.filterTransitionEvents, self)
+		end
         self.transitionEventCatcher:removeFromParent()
     end
 end

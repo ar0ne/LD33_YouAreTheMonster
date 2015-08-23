@@ -41,7 +41,7 @@ function Gestures:onTouchesEnd(event)
 		self.touches[event.touch.id].endX = event.touch.x
 		self.touches[event.touch.id].endY = event.touch.y
 		
-		self.callback(self.touches[event.touch.id])
+		self.callback(self.touches[event.touch.id], self.scene)
 		
 		--table.remove(self.touches, event.touch.id)
 	end
