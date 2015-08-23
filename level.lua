@@ -104,9 +104,10 @@ function LevelScene:init()
 		scale_y = conf.CLOUDS_SCALE_Y,
 		speed   = conf.CLOUDS_SPEED,
 		screen_width = conf.WIDTH,
+		alpha = conf.CLOUDS_ALPHA,
 	})
 	
-	--self:addChild(self.clouds)
+	self:addChild(self.clouds)
 	
 	self.stars = Stars.new({
 		level = self,
@@ -115,6 +116,8 @@ function LevelScene:init()
 		alpha = conf.STARS_ALPHA
 	})
 		
+	self.stars:setVisible(false)
+	
 	self:addChild(self.stars)	
 	
 	
@@ -130,6 +133,7 @@ end
 function LevelScene:onEnterFrame(event)
 
 	if not self.paused then
+		
 		if #self.enemys_left < conf.MAX_ENEMY_COUNT then
 			local enemy = self:generateRandomEnemies("left")
 			self.enemys_left[#self.enemys_left + 1] = enemy
@@ -140,6 +144,7 @@ function LevelScene:onEnterFrame(event)
 			self.enemys_right[#self.enemys_right + 1] = enemy
 			self:addChild(enemy)
 		end 
+		
 	end
 end
 

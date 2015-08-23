@@ -1,5 +1,5 @@
 <project>
- <properties packageName="com.yourdomain.yourapp" mouseTouchOrder="0" iosDevice="0" win_org="GiderosMobile" mouseToTouch="1" logicalWidth="1080" orientation="3" fps="60" retinaDisplay="0" osx_org="GiderosMobile" windowWidth="0" win_domain="giderosmobile.com" architecture="0" windowHeight="0" android_template="0" encryptCode="0" touchToMouse="1" autorotation="0" scaleMode="0" osx_domain="giderosmobile.com" encryptAssets="0" logicalHeight="1920" assetsOnly="0">
+ <properties fps="60" assetsOnly="0" encryptAssets="0" mouseToTouch="1" windowWidth="0" osx_org="GiderosMobile" win_org="GiderosMobile" iosDevice="0" mouseTouchOrder="0" android_template="0" encryptCode="0" logicalHeight="1920" win_domain="giderosmobile.com" autorotation="0" packageName="com.yourdomain.yourapp" scaleMode="0" osx_domain="giderosmobile.com" retinaDisplay="0" windowHeight="0" orientation="3" architecture="0" logicalWidth="1080" touchToMouse="1">
   <imageScales/>
  </properties>
  <folder name="assets">
@@ -18,22 +18,32 @@
    </folder>
   </folder>
   <folder name="images">
-   <file source="assets/images/Stars_03.png"/>
-   <file source="assets/images/Stars_02.png"/>
-   <file source="assets/images/Stars_01.png"/>
-   <file source="assets/images/Clouds.png"/>
-   <file source="assets/images/Hero_wait.png"/>
-   <file source="assets/images/Hero_fire.png"/>
-   <file source="assets/images/AI_red_wait.png"/>
-   <file source="assets/images/AI_red_fly.png"/>
-   <file source="assets/images/AI_red_fall.png"/>
-   <file source="assets/images/AI_blue_wait.png"/>
-   <file source="assets/images/AI_blue_fly.png"/>
+   <file source="assets/images/game_over_bg.png"/>
    <file source="assets/images/AI_blue_fall.png"/>
-   <file source="assets/images/menu_bg.png"/>
+   <file source="assets/images/AI_blue_fight.png"/>
+   <file source="assets/images/AI_blue_fight_hand.png"/>
+   <file source="assets/images/AI_blue_fly.png"/>
+   <file source="assets/images/AI_blue_wait.png"/>
+   <file source="assets/images/AI_red_fall.png"/>
+   <file source="assets/images/AI_red_fight.png"/>
+   <file source="assets/images/AI_red_fight_hand.png"/>
+   <file source="assets/images/AI_red_fly.png"/>
+   <file source="assets/images/AI_red_wait.png"/>
+   <file source="assets/images/Clouds.png"/>
+   <file source="assets/images/Hero_fire.png"/>
+   <file source="assets/images/Hero_transform.png"/>
+   <file source="assets/images/Hero_transform.txt"/>
+   <file source="assets/images/Hero_wait.png"/>
+   <file source="assets/images/Logo.png"/>
+   <file source="assets/images/Stars_01.png"/>
+   <file source="assets/images/Stars_02.png"/>
+   <file source="assets/images/Stars_03.png"/>
+   <file source="assets/images/gameover_text.png"/>
    <file source="assets/images/level_bg.png"/>
-   <file source="assets/images/start_button.png"/>
    <file source="assets/images/level_bg_day.png"/>
+   <file source="assets/images/menu_bg.png"/>
+   <file source="assets/images/retry_button.png"/>
+   <file source="assets/images/start_button.png"/>
   </folder>
   <folder name="sounds"/>
  </folder>
@@ -43,6 +53,7 @@
  <file source="config.lua"/>
  <file source="easing.lua"/>
  <file source="enemy.lua"/>
+ <file source="game_over.lua"/>
  <file source="gestures.lua"/>
  <file source="gtween.lua"/>
  <file source="hero.lua"/>
