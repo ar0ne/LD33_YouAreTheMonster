@@ -6,7 +6,7 @@ Clouds = Core.class(Sprite)
 	scale_y
 	screen_width
 	speed
-
+	alpha
 --]]
 function Clouds:init( options )
 	
@@ -25,6 +25,7 @@ function Clouds:init( options )
 		self.clouds[i]:setAnchorPosition(0, 0)
 		self.clouds[i]:setScale(options.scale_x, options.scale_y)
 		self.clouds[i]:setPosition((i - 2) * self.screen_width, 0)
+		self.clouds[i]:setAlpha(options.alpha)
 		self:addChild(self.clouds[i])
 	end
 	

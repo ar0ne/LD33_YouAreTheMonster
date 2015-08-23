@@ -18,22 +18,32 @@
    </folder>
   </folder>
   <folder name="images">
-   <file source="assets/images/Stars_03.png"/>
-   <file source="assets/images/Stars_02.png"/>
-   <file source="assets/images/Stars_01.png"/>
-   <file source="assets/images/Clouds.png"/>
-   <file source="assets/images/Hero_wait.png"/>
-   <file source="assets/images/Hero_fire.png"/>
-   <file source="assets/images/AI_red_wait.png"/>
-   <file source="assets/images/AI_red_fly.png"/>
-   <file source="assets/images/AI_red_fall.png"/>
-   <file source="assets/images/AI_blue_wait.png"/>
-   <file source="assets/images/AI_blue_fly.png"/>
    <file source="assets/images/AI_blue_fall.png"/>
-   <file source="assets/images/menu_bg.png"/>
+   <file source="assets/images/AI_blue_fight_foot.png"/>
+   <file source="assets/images/AI_blue_fight_hand.png"/>
+   <file source="assets/images/AI_blue_fly.png"/>
+   <file source="assets/images/AI_blue_wait.png"/>
+   <file source="assets/images/AI_red_fall.png"/>
+   <file source="assets/images/AI_red_fight_foot.png"/>
+   <file source="assets/images/AI_red_fight_hand.png"/>
+   <file source="assets/images/AI_red_fly.png"/>
+   <file source="assets/images/AI_red_wait.png"/>
+   <file source="assets/images/Clouds.png"/>
+   <file source="assets/images/Hero_fire.png"/>
+   <file source="assets/images/Hero_transform.png"/>
+   <file source="assets/images/Hero_transform.txt"/>
+   <file source="assets/images/Hero_wait.png"/>
+   <file source="assets/images/Logo.png"/>
+   <file source="assets/images/Stars_01.png"/>
+   <file source="assets/images/Stars_02.png"/>
+   <file source="assets/images/Stars_03.png"/>
+   <file source="assets/images/game_over_bg.png"/>
+   <file source="assets/images/gameover_text.png"/>
    <file source="assets/images/level_bg.png"/>
-   <file source="assets/images/start_button.png"/>
    <file source="assets/images/level_bg_day.png"/>
+   <file source="assets/images/menu_bg.png"/>
+   <file source="assets/images/retry_button.png"/>
+   <file source="assets/images/start_button.png"/>
   </folder>
   <folder name="sounds"/>
  </folder>

@@ -53,9 +53,10 @@ function LevelScene:init()
 		scale_y = config.CLOUDS_SCALE_Y,
 		speed   = config.CLOUDS_SPEED,
 		screen_width = config.WIDTH,
+        alpha = conf.CLOUDS_ALPHA,
 	})
 	
-	--self:addChild(self.clouds)
+	self:addChild(self.clouds)
 	
 	self.stars = Stars.new({
 		level = self,
@@ -64,7 +65,7 @@ function LevelScene:init()
 		alpha = config.STARS_ALPHA
 	})
 		
-	self:addChild(self.stars)	
+	--self:addChild(self.stars)	
 	
 	
 	
