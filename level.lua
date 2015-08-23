@@ -68,11 +68,11 @@ function LevelScene:init()
 
 	local timelinewidth = screenW * 0.2
 	local timer = Timeline.new(self);
-	timer:addLine(1, screenW/10, screenH*0.2, timelinewidth, 20, function()
+	timer:addLine(1, screenW/10, screenH*0.1, timelinewidth, 20, function()
 		collectgarbage()
 		timer:restart(1, 3)
 	end)
-	timer:addLine(2, screenW-screenW/10-timelinewidth, screenH*0.2, timelinewidth, 20, function()
+	timer:addLine(2, screenW-screenW/10-timelinewidth, screenH*0.1, timelinewidth, 20, function()
 		collectgarbage()
 		timer:restart(2, 3)
 	end)

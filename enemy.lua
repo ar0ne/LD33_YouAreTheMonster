@@ -27,6 +27,11 @@ function Enemy:init(options)
 	local enemy_blue_fall_spritesheet 	= Texture.new("assets/images/AI_blue_fall.png")
 	local enemy_red_fall_spritesheet 	= Texture.new("assets/images/AI_red_fall.png")
 	
+	local enemy_blue_fight_foot_spritesheet = Texture.new("assets/images/AI_blue_fight_foot.png")
+	local enemy_red_fight_foot_spritesheet = Texture.new("assets/images/AI_red_fight_foot.png")
+	local enemy_blue_fight_hand_spritesheet = Texture.new("assets/images/AI_blue_fight_hand.png")
+	local enemy_red_fight_hand_spritesheet = Texture.new("assets/images/AI_red_fight_hand.png")
+	
 	local animation = {
 	
 		Bitmap.new(TextureRegion.new(enemy_blue_wait_spritesheet,  0, 0, 50, 50)),
@@ -72,6 +77,48 @@ function Enemy:init(options)
 		Bitmap.new(TextureRegion.new(enemy_red_fall_spritesheet, 450, 0, 50, 50)),
 		Bitmap.new(TextureRegion.new(enemy_red_fall_spritesheet, 500, 0, 50, 50)),
 		Bitmap.new(TextureRegion.new(enemy_red_fall_spritesheet, 550, 0, 50, 50)),
+		
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet,   0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet,  50, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 100, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 150, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 200, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 250, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 300, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 350, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 400, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 450, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 500, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 550, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 600, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_foot_spritesheet, 6500, 0, 50, 50)),
+		
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet,   0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet,  50, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 100, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 150, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 200, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 250, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 300, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 350, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 400, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 450, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 500, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 550, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 600, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_foot_spritesheet, 6500, 0, 50, 50)),
+		
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_hand_spritesheet,     0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_hand_spritesheet,    50, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_hand_spritesheet,   100, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_hand_spritesheet,   150, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_blue_fight_hand_spritesheet,   200, 0, 50, 50)),
+		
+		Bitmap.new(TextureRegion.new(enemy_red_fight_hand_spritesheet,     0, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_hand_spritesheet,    50, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_hand_spritesheet,   100, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_hand_spritesheet,   150, 0, 50, 50)),
+		Bitmap.new(TextureRegion.new(enemy_red_fight_hand_spritesheet,   200, 0, 50, 50)),
 		
 	}
 	
@@ -130,7 +177,48 @@ function Enemy:init(options)
 		{491, 500, animation[36]},
 		{501, 510, animation[37]},
 		{511, 520, animation[38], {alpha = {0, 1, "easeOut"}}},
-		
+		-- blue fight foot
+		{521, 525, animation[39]},
+		{526, 530, animation[40]},
+		{531, 535, animation[41]},
+		{536, 540, animation[42]},
+		{541, 545, animation[43]},
+		{546, 550, animation[44]},
+		{551, 555, animation[45]},
+		{556, 560, animation[46]},
+		{561, 565, animation[47]},
+		{566, 570, animation[48]},
+		{571, 575, animation[49]},
+		{576, 580, animation[50]},
+		{581, 585, animation[51]},
+		{586, 590, animation[52]},
+		-- red fight foot
+		{591, 595, animation[53]},
+		{596, 600, animation[54]},
+		{601, 605, animation[55]},
+		{606, 610, animation[56]},
+		{611, 615, animation[57]},
+		{616, 620, animation[58]},
+		{621, 625, animation[59]},
+		{626, 630, animation[60]},
+		{631, 635, animation[61]},
+		{636, 640, animation[62]},
+		{641, 645, animation[63]},
+		{646, 650, animation[64]},
+		{651, 655, animation[65]},
+		{656, 660, animation[66]},
+		-- blue fight hand
+		{661, 665, animation[67]},
+		{666, 670, animation[68]},
+		{671, 675, animation[69]},
+		{676, 680, animation[70]},
+		{681, 685, animation[71]},
+		-- red fight hand
+		{686, 690, animation[72]},
+		{691, 695, animation[73]},
+		{696, 700, animation[74]},
+		{701, 705, animation[75]},
+		{706, 710, animation[76]},
 	}
 	
 	self.enemy_mc:setGotoAction(40, 1)  -- blue wait
@@ -141,11 +229,17 @@ function Enemy:init(options)
 	self.enemy_mc:setStopAction(400)
 	self.enemy_mc:setStopAction(520)
 	
+	self.enemy_mc:setGotoAction(590, 521)
+	self.enemy_mc:setGotoAction(660, 591)
+	self.enemy_mc:setGotoAction(685, 661)
+	self.enemy_mc:setGotoAction(710, 686)
+	
 	if self.color == "blue" then
 		self.enemy_mc:gotoAndPlay(1)
 	elseif self.color == "red" then
 		self.enemy_mc:gotoAndPlay(41)
 	end
+	
 	
 	self:addChild(self.enemy_mc)
 	
