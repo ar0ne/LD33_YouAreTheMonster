@@ -75,7 +75,7 @@ function LevelScene:init()
 	self.crowd_left = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW / 2 - 300,
+		pos_x = 400,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -84,7 +84,7 @@ function LevelScene:init()
 	self.crowd_right = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW / 2 + 320,
+		pos_x = config.SCREENW - 400,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -225,6 +225,11 @@ function LevelScene:onKeyDown(event)
 end
 
 function LevelScene.onSwype (touch, self)
+
+	if self.paused then
+		return
+	end
+
 	local sX = touch.startX or 0
 	local sY = touch.startY or 0
 	local eX = touch.endX or 0
@@ -262,10 +267,13 @@ function LevelScene.onSwype (touch, self)
 			local tween = tween.new(self, config.CAM_SPEED, animate, properties)
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("left top")
 		------ LEFT TOP ------
 		-- режим человека
+		if self.enemy_left.paused then
+			return
+		end
 		self.timeline:stop(1)
 		self.enemy_left.paused = true
 		if not self.hero.is_demon then
@@ -333,11 +341,14 @@ function LevelScene.onSwype (touch, self)
 			end
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("left bottom")
 		------ LEFT BOTTOM ------
 		-- режим человека
 		self.timeline:stop(1)
+		if self.enemy_left.paused then
+			return
+		end
 		self.enemy_left.paused = true
 		if not self.hero.is_demon then
 			self.hero.hero_mc:gotoAndPlay(self.hero.goto.hero_fire_left)
@@ -399,11 +410,14 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("right top")
 		------ RIGHT TOP ------
 		-- режим человека
 		self.timeline:stop(2)
+		if self.enemy_right.paused then
+			return
+		end
 		self.enemy_right.paused = true
 		if not self.hero.is_demon then
 			self.hero.hero_mc:gotoAndPlay(self.hero.goto.hero_fire_right)
@@ -465,11 +479,14 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("right bottom")
 		------ RIGHT BOTTOM ------
 		-- режим человека
 		self.timeline:stop(2)
+		if self.enemy_right.paused then
+			return
+		end
 		self.enemy_right.paused = true
 		if not self.hero.is_demon then
 			self.hero.hero_mc:gotoAndPlay(self.hero.goto.hero_fire_right)
@@ -542,10 +559,10 @@ function LevelScene:generateRandomEnemies(direction)
 	local border
 	-- направление на право, но идёт с левой стороны!
 	if direction == "right" then 
-		pos_x = config.SCREENW / 2 - 400
+		pos_x = 200
 		border = config.SCREENW / 2 - conf.OFFSET_ENEMY_ATTACK_POSITION
 	elseif direction == "left" then
-		pos_x = config.SCREENW / 2 + 400
+		pos_x = config.SCREENW - 200
 		border = config.SCREENW / 2 + conf.OFFSET_ENEMY_ATTACK_POSITION
 	end
 	
@@ -558,14 +575,14 @@ function LevelScene:generateRandomEnemies(direction)
 		color = color,
 		border = border,
 		speed = config.ENEMY_SPEED,
-		startAttack = self.startAttack
+		startTimer = self.startTimer
 	})
 	
 	return enemy
 
 end
 
-function LevelScene.startAttack(direction, self)
+function LevelScene.startTimer(direction, self)
 
 	local time
 	if not self.hero.is_demon then
@@ -576,13 +593,13 @@ function LevelScene.startAttack(direction, self)
 
 	if direction == "right" then
 		--print("Start right timer")
-		if self.enemy_left then
+		--if self.enemy_left then
 			self.timeline:start(1, time)
-		end
+		--end
 	elseif direction == "left" then
 		--print("Start left timer")
-		if self.enemy_right then
+		--if self.enemy_right then
 			self.timeline:start(2, time)
-		end
+		--end
 	end
 end
