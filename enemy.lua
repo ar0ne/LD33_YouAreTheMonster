@@ -308,3 +308,4 @@ function Enemy:onEnterFrame(event)
 		self:setPosition(x, y)
 	end
 end
+

@@ -1,5 +1,5 @@
 <project>
- <properties logicalHeight="1920" touchToMouse="1" win_domain="giderosmobile.com" scaleMode="0" autorotation="0" osx_org="GiderosMobile" orientation="3" iosDevice="0" packageName="com.yourdomain.yourapp" fps="60" mouseTouchOrder="0" retinaDisplay="0" windowWidth="0" mouseToTouch="1" android_template="0" encryptCode="0" osx_domain="giderosmobile.com" logicalWidth="1080" architecture="0" windowHeight="0" assetsOnly="0" win_org="GiderosMobile" encryptAssets="0">
+ <properties scaleMode="0" logicalHeight="1920" encryptCode="0" architecture="0" logicalWidth="1080" touchToMouse="1" win_org="GiderosMobile" packageName="com.yourdomain.yourapp" windowWidth="0" retinaDisplay="0" osx_domain="giderosmobile.com" android_template="0" iosDevice="0" mouseTouchOrder="0" autorotation="0" assetsOnly="0" windowHeight="0" encryptAssets="0" osx_org="GiderosMobile" orientation="3" win_domain="giderosmobile.com" mouseToTouch="1" fps="60">
   <imageScales/>
  </properties>
  <folder name="assets">
@@ -51,6 +51,7 @@
    <file source="assets/images/start_button.png"/>
   </folder>
   <folder name="sounds">
+   <file source="assets/sounds/transform.mp3"/>
    <file source="assets/sounds/Game_over.mp3"/>
    <file source="assets/sounds/Menu.mp3"/>
   </folder>
@@ -73,8 +74,6 @@
  <file source="menu.lua"/>
  <file source="scenemanager.lua"/>
  <file source="score.lua"/>
- <file source="soundmanager.lua"/>
  <file source="stars.lua"/>
  <file source="timeline.lua"/>
 </project>
-

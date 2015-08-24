@@ -6,8 +6,6 @@ function LevelScene:init()
 	
 	self.paused = false
 	self.camState = 1
-	self.sound = SoundManager.new()
-	--self.sounds:add("point", "assets/sounds/sfx_point.mp3")
 	
 	local gest = Gestures.new(self, self.onSwype)
 	
@@ -191,7 +189,7 @@ end
 
 function LevelScene:switchToMonsterMode()
 	self.hero.hero_mc:gotoAndPlay(self.hero.goto.hero_transform_to_monster)
-	
+	self.hero.transform_sound:play()
 	self.paused = true
 	
 	self.hero.hero_mc:addEventListener(Event.COMPLETE, function() 
@@ -617,11 +615,13 @@ function LevelScene.startTimer(direction, self)
 	if direction == "right" then
 		--print("Start right timer")
 		--if self.enemy_left then
+			self.timeline:stop(1)
 			self.timeline:start(1, time)
 		--end
 	elseif direction == "left" then
 		--print("Start left timer")
 		--if self.enemy_right then
+			self.timeline:stop(2)
 			self.timeline:start(2, time)
 		--end
 	end

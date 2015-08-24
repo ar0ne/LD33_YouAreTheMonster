@@ -14,6 +14,8 @@ function Hero:init(options)
 	self.is_attack = false
 	self.is_demon = false
 	
+	self.transform_sound = Sound.new("assets/sounds/transform.mp3")
+	
 	local hero_wait_spritesheet = Texture.new("assets/images/Hero_wait.png")
 	local hero_fire_spritesheet = Texture.new("assets/images/Hero_fire.png")
 	local hero_transform_pack = TexturePack.new("assets/images/Hero_transform.txt", "assets/images/Hero_transform.png", true)
