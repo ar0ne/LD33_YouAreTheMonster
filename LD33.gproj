@@ -2,6 +2,7 @@
  <properties scaleMode="0" logicalHeight="1920" encryptCode="0" architecture="0" logicalWidth="1080" touchToMouse="1" win_org="GiderosMobile" packageName="com.yourdomain.yourapp" windowWidth="0" retinaDisplay="0" osx_domain="giderosmobile.com" android_template="0" iosDevice="0" mouseTouchOrder="0" autorotation="0" assetsOnly="0" windowHeight="0" encryptAssets="0" osx_org="GiderosMobile" orientation="3" win_domain="giderosmobile.com" mouseToTouch="1" fps="60">
   <imageScales/>
  </properties>
+ <file source="mortal.lua"/>
  <folder name="assets">
   <folder name="fonts">
    <folder name="big">
@@ -35,6 +36,7 @@
    <file source="assets/images/Hero_transform.txt"/>
    <file source="assets/images/Hero_wait.png"/>
    <file source="assets/images/Logo.png"/>
+   <file source="assets/images/LueKang.png"/>
    <file source="assets/images/Stars_01.png"/>
    <file source="assets/images/Stars_02.png"/>
    <file source="assets/images/Stars_03.png"/>

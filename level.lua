@@ -115,6 +115,16 @@ function LevelScene:init()
 	})
 	
 	
+	self.lue = Mortal.new({
+		scale = 2.1,
+		pos_x = - conf.SCREENW / 2,
+		pos_y = conf.SCREENH / 3,
+		speed = 15
+	})
+	
+	self:addChild(self.lue)
+
+	
 	---- EVENTS ------
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	self:addEventListener(Event.KEY_DOWN, self.onKeyDown, self)
@@ -190,6 +200,9 @@ end
 function LevelScene:switchToMonsterMode()
 	self.hero.hero_mc:gotoAndPlay(self.hero.goto.hero_transform_to_monster)
 	self.hero.transform_sound:play()
+	
+	self:addChild(self.lue)
+	
 	self.paused = true
 	
 	self.hero.hero_mc:addEventListener(Event.COMPLETE, function() 
@@ -233,7 +246,7 @@ function LevelScene:onEnterFrame(event)
 		if not self.enemy_left then
 			self.enemy_left = self:generateRandomEnemies("right")
 			self:addChild(self.enemy_left)
-		end 
+		end 		
 		
 	end
 	
