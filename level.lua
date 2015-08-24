@@ -40,7 +40,14 @@ function LevelScene:init()
 	
 	self.score = Score.new({
 		level = self,
+		scale = config.SCORE_SCALE,
+		pos_y = 100,
+		center_x = conf.SCREENW / 2,
 	})
+	
+	self:addChild(self.score)
+	
+	self.score:updateScore(0)
 	
 	self:addChild(self.score)
 	
@@ -119,18 +126,24 @@ end
 function LevelScene.onLeftTimeEnd(timer, self)
 
 	local live_count = self.lives:getLiveCount("LEFT")
-	print("LEFT: " .. live_count)
+	local time
+	if not self.hero.is_demon then
+		time = conf.LEVEL_HUMAN_TIME
+	else
+		time = conf.LEVEL_MONSTER_TIME
+	end
+	
 	if not self.hero.is_demon then
 		if live_count >= 1 then
 			self.lives:decrement("LEFT")
-			timer:start(1, 5)
+			timer:start(1, time)
 		elseif live_count < 1 then
 			self:switchToMonsterMode()
 		end
 	else
 		if live_count >= 1 then
 			self.lives:decrement("LEFT")
-			timer:start(1, 5)
+			timer:start(1, time)
 		elseif live_count < 1 then
 			sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
 		end
@@ -267,6 +280,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_left = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -298,6 +312,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_left = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -335,6 +350,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_left = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -364,6 +380,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_left = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -399,6 +416,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_right = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -428,6 +446,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_right = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -463,6 +482,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_right = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -492,6 +512,7 @@ function LevelScene.onSwype (touch, self)
 						self.enemy_right = nil
 					end
 				end)
+				self.score:updateScore(self.score:getScore() + 1)
 			else
 				-- если ошибся
 				-- ecли жизни есть
@@ -546,15 +567,22 @@ end
 
 function LevelScene.startAttack(direction, self)
 
+	local time
+	if not self.hero.is_demon then
+		time = conf.LEVEL_HUMAN_TIME
+	else
+		time = conf.LEVEL_MONSTER_TIME
+	end
+
 	if direction == "right" then
 		--print("Start right timer")
 		if self.enemy_left then
-			self.timeline:start(1, 5)
+			self.timeline:start(1, time)
 		end
 	elseif direction == "left" then
 		--print("Start left timer")
 		if self.enemy_right then
-			self.timeline:start(2, 5)
+			self.timeline:start(2, time)
 		end
 	end
 end
