@@ -75,7 +75,7 @@ function LevelScene:init()
 	self.crowd_left = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = 400,
+		pos_x = config.SCREENW / 2 - 300,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -84,7 +84,7 @@ function LevelScene:init()
 	self.crowd_right = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW - 400,
+		pos_x = config.SCREENW / 2 + 320,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -262,7 +262,7 @@ function LevelScene.onSwype (touch, self)
 			local tween = tween.new(self, config.CAM_SPEED, animate, properties)
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
 		print("left top")
 		------ LEFT TOP ------
 		-- режим человека
@@ -333,7 +333,7 @@ function LevelScene.onSwype (touch, self)
 			end
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
 		print("left bottom")
 		------ LEFT BOTTOM ------
 		-- режим человека
@@ -399,7 +399,7 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
 		print("right top")
 		------ RIGHT TOP ------
 		-- режим человека
@@ -465,7 +465,7 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
 		print("right bottom")
 		------ RIGHT BOTTOM ------
 		-- режим человека
@@ -542,10 +542,10 @@ function LevelScene:generateRandomEnemies(direction)
 	local border
 	-- направление на право, но идёт с левой стороны!
 	if direction == "right" then 
-		pos_x = 200
+		pos_x = config.SCREENW / 2 - 400
 		border = config.SCREENW / 2 - conf.OFFSET_ENEMY_ATTACK_POSITION
 	elseif direction == "left" then
-		pos_x = config.SCREENW - 200
+		pos_x = config.SCREENW / 2 + 400
 		border = config.SCREENW / 2 + conf.OFFSET_ENEMY_ATTACK_POSITION
 	end
 	
