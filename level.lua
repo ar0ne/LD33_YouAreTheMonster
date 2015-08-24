@@ -68,7 +68,24 @@ function LevelScene:init()
 	--self:addChild(self.stars)	
 	
 	
+	self.lives = Lives.new(self, {
+		goodImage = "assets/images/heart.png",
+		badImage = "assets/images/skull.png",
+		size = config.SCREENH / 10
+	})
 	
+	self.lives:add("LEFT", {
+		X = config.SCREENW * 0.1 + timelinewidth / 2,
+		Y = config.SCREENH * 0.2
+	})
+	
+	self.lives:add("RIGHT", {
+		X = config.SCREENW * 0.9 - timelinewidth / 2,
+		Y = config.SCREENH * 0.2,
+		onHeartEnd = function (self)
+			self:setType("RIGHT", "skull")
+		end
+	})
 	
 	---- EVENTS ------
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
@@ -118,6 +135,7 @@ function LevelScene:onKeyDown(event)
 end
 
 function LevelScene.onSwype (touch, self)
+	
 	local sX = touch.startX or 0
 	local sY = touch.startY or 0
 	local eX = touch.endX or 0
