@@ -9,7 +9,7 @@ Enemy = Core.class(Sprite)
 	color - (blue/red)
 	middle 
 	speed
-	startAttack
+	startTimer
 --]]
 
 function Enemy:init(options)
@@ -21,7 +21,7 @@ function Enemy:init(options)
 	self.color = options.color
 	self.speed = options.speed
 	self.is_attack = false
-	self.startAttack = options.startAttack
+	self.startTimer = options.startTimer
 	
 	local enemy_blue_wait_spritesheet 	= Texture.new("assets/images/AI_blue_wait.png")
 	local enemy_red_wait_spritesheet 	= Texture.new("assets/images/AI_red_wait.png")
@@ -266,10 +266,11 @@ function Enemy:init(options)
 		self.enemy_mc:gotoAndPlay(self.goto.red_wait)
 	end
 	
-	
 	self:addChild(self.enemy_mc)
 	
 	self:setPosition(options.pos_x, options.pos_y, 0.1)
+	
+	self.startTimer(self.direction, self.level)
 	
 	---- EVENTS ---- 
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
@@ -300,7 +301,7 @@ function Enemy:onEnterFrame(event)
 				self.enemy_mc:gotoAndPlay(frame)
 				
 				self.is_attack = true
-				self.startAttack(self.direction, self.level)
+				
 			end
 		end
 		

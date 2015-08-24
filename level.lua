@@ -11,14 +11,24 @@ function LevelScene:init()
 	
 	local gest = Gestures.new(self, self.onSwype)
 	
-	self.bg = Background.new({
+	self.bg_day = Background.new({
 		level = self,
 		image = "assets/images/level_bg_day.png",
 		screen_width = config.SCREENW,
 		screen_height = config.SCREENH
 	})
 	
-	self:addChild(self.bg)
+	self.bg_night = Background.new({
+		level = self,
+		image = "assets/images/level_bg_night.png",
+		screen_width = config.SCREENW,
+		screen_height = config.SCREENH
+	})
+	
+	self.bg_night:setVisible(false)
+	
+	self:addChild(self.bg_day)
+	self:addChild(self.bg_night)
 
 	local timelinewidth = config.SCREENW * 0.2
 	self.timeline = Timeline.new(self);
@@ -75,7 +85,7 @@ function LevelScene:init()
 	self.crowd_left = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW / 2 - 300,
+		pos_x = 400,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -84,7 +94,7 @@ function LevelScene:init()
 	self.crowd_right = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW / 2 + 320,
+		pos_x = config.SCREENW - 400,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -151,20 +161,28 @@ function LevelScene.onLeftTimeEnd(timer, self)
 end
 
 function LevelScene.onRightTimeEnd(timer, self)
+
+	local live_count = self.lives:getLiveCount("LEFT")
+	local time
+	if not self.hero.is_demon then
+		time = conf.LEVEL_HUMAN_TIME
+	else
+		time = conf.LEVEL_MONSTER_TIME
+	end
 	
 	local live_count = self.lives:getLiveCount("RIGHT")
-	print("RIGHT: " .. live_count)
+	--print("RIGHT: " .. live_count)
 	if not self.hero.is_demon then
 		if live_count >= 1 then
 			self.lives:decrement("RIGHT")
-			timer:start(2, 5)
+			timer:start(2, time)
 		elseif live_count < 1  then
 			self:switchToMonsterMode()
 		end
 	else 
 		if live_count >= 1 then
 			self.lives:decrement("RIGHT")
-			timer:start(2, 5)
+			timer:start(2, time)
 		elseif live_count < 1  then
 			sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
 		end
@@ -189,6 +207,11 @@ function LevelScene:switchToMonsterMode()
 	end
 	
 	self.hero.is_demon = true
+	
+	self.stars:setVisible(true)
+	self.clouds:setVisible(false)
+	self.bg_night:setVisible(true)
+	self.bg_day:setVisible(false)
 	
 	self.enemy_left, self.enemy_right = nil, nil
 	self.timeline:stop(1)
@@ -225,6 +248,11 @@ function LevelScene:onKeyDown(event)
 end
 
 function LevelScene.onSwype (touch, self)
+
+	if self.paused then
+		return
+	end
+
 	local sX = touch.startX or 0
 	local sY = touch.startY or 0
 	local eX = touch.endX or 0
@@ -262,10 +290,13 @@ function LevelScene.onSwype (touch, self)
 			local tween = tween.new(self, config.CAM_SPEED, animate, properties)
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("left top")
 		------ LEFT TOP ------
 		-- режим человека
+		if self.enemy_left.paused then
+			return
+		end
 		self.timeline:stop(1)
 		self.enemy_left.paused = true
 		if not self.hero.is_demon then
@@ -333,10 +364,13 @@ function LevelScene.onSwype (touch, self)
 			end
 		end
 		
-	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
+	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("left bottom")
 		------ LEFT BOTTOM ------
 		-- режим человека
+		if self.enemy_left.paused then
+			return
+		end
 		self.timeline:stop(1)
 		self.enemy_left.paused = true
 		if not self.hero.is_demon then
@@ -399,10 +433,13 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY > config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("right top")
 		------ RIGHT TOP ------
 		-- режим человека
+		if self.enemy_right.paused then
+			return
+		end
 		self.timeline:stop(2)
 		self.enemy_right.paused = true
 		if not self.hero.is_demon then
@@ -465,10 +502,13 @@ function LevelScene.onSwype (touch, self)
 				end
 			end
 		end
-	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 5 and dX <= config.SCREENW / 5 and dY < -config.SCREENH / 3 then
+	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("right bottom")
 		------ RIGHT BOTTOM ------
 		-- режим человека
+		if self.enemy_right.paused then
+			return
+		end
 		self.timeline:stop(2)
 		self.enemy_right.paused = true
 		if not self.hero.is_demon then
@@ -542,10 +582,10 @@ function LevelScene:generateRandomEnemies(direction)
 	local border
 	-- направление на право, но идёт с левой стороны!
 	if direction == "right" then 
-		pos_x = config.SCREENW / 2 - 400
+		pos_x = 200
 		border = config.SCREENW / 2 - conf.OFFSET_ENEMY_ATTACK_POSITION
 	elseif direction == "left" then
-		pos_x = config.SCREENW / 2 + 400
+		pos_x = config.SCREENW - 200
 		border = config.SCREENW / 2 + conf.OFFSET_ENEMY_ATTACK_POSITION
 	end
 	
@@ -558,14 +598,14 @@ function LevelScene:generateRandomEnemies(direction)
 		color = color,
 		border = border,
 		speed = config.ENEMY_SPEED,
-		startAttack = self.startAttack
+		startTimer = self.startTimer
 	})
 	
 	return enemy
 
 end
 
-function LevelScene.startAttack(direction, self)
+function LevelScene.startTimer(direction, self)
 
 	local time
 	if not self.hero.is_demon then
@@ -576,13 +616,13 @@ function LevelScene.startAttack(direction, self)
 
 	if direction == "right" then
 		--print("Start right timer")
-		if self.enemy_left then
+		--if self.enemy_left then
 			self.timeline:start(1, time)
-		end
+		--end
 	elseif direction == "left" then
 		--print("Start left timer")
-		if self.enemy_right then
+		--if self.enemy_right then
 			self.timeline:start(2, time)
-		end
+		--end
 	end
 end

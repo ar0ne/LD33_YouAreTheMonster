@@ -42,8 +42,8 @@
    <file source="assets/images/game_over_bg.png"/>
    <file source="assets/images/gameover_text.png"/>
    <file source="assets/images/heart.png"/>
-   <file source="assets/images/level_bg.png"/>
    <file source="assets/images/level_bg_day.png"/>
+   <file source="assets/images/level_bg_night.png"/>
    <file source="assets/images/menu_bg.png"/>
    <file source="assets/images/retry_button.png"/>
    <file source="assets/images/shadow.png"/>
@@ -77,3 +77,4 @@
  <file source="stars.lua"/>
  <file source="timeline.lua"/>
 </project>
+
