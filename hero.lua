@@ -18,6 +18,8 @@ function Hero:init(options)
 	local hero_fire_spritesheet = Texture.new("assets/images/Hero_fire.png")
 	local hero_transform_pack = TexturePack.new("assets/images/Hero_transform.txt", "assets/images/Hero_transform.png", true)
 	
+	local monster_wait_spritesheet_frame_2 = Texture.new("assets/images/12_1.png") 
+	
 	local animation = {
 		Bitmap.new(TextureRegion.new(hero_wait_spritesheet, 0, 0, 50, 50)),
 		Bitmap.new(TextureRegion.new(hero_wait_spritesheet, 50, 0, 50, 50)),
@@ -43,6 +45,9 @@ function Hero:init(options)
 		Bitmap.new(hero_transform_pack:getTextureRegion("17.png")),
 		Bitmap.new(hero_transform_pack:getTextureRegion("18.png")),
 		Bitmap.new(hero_transform_pack:getTextureRegion("19.png")),
+		
+		-- @TODO: add to hero_transform_pack
+		Bitmap.new(TextureRegion.new(monster_wait_spritesheet_frame_2, 0, 0, 50, 50)),
 
 		
 	}
@@ -91,22 +96,45 @@ function Hero:init(options)
 		{541, 560, animation[22]},
 		{561, 580, animation[23]},
 		
-		-- @TODO: add monster wait animation!!!
-			
+		-- monster wait right
+		{581,  600, animation[16], {scaleX = options.hero_scale }},
+		{601,  620, animation[24], {scaleX = options.hero_scale }},
+		-- monster wait left
+		{621, 640, animation[16], {scaleX = -options.hero_scale }},
+		{641, 660, animation[24], {scaleX = -options.hero_scale }},
+		
 	}
 	
-	self.hero_mc:setGotoAction(40, 	1)   -- human wait right
-	self.hero_mc:setGotoAction(80, 	41)  -- human wait left
-	self.hero_mc:setGotoAction(120, 1)  -- human fire right
-	self.hero_mc:setGotoAction(160, 41) -- human fire left
-	self.hero_mc:setGotoAction(420, 381) -- monster fire left
-	self.hero_mc:setGotoAction(460, 421) -- monster fire right
+	self.goto = {
+		hero_wait_right = 1,
+		hero_wait_left = 41,
+		hero_fire_right = 81,
+		hero_fire_left = 121,
+		hero_transform_to_monster = 161,
+		
+		monster_wait_right = 581,
+		monster_wait_left  = 621,
+		
+		monster_fire_left = 381,
+		monster_fire_right = 421,
+		
+		monster_transform_to_human = 461,
+		
+	}
 	
-	-- @TODO: set goto to wait monster
-	self.hero_mc:setStopAction(380) -- transform to monster
+	self.hero_mc:setGotoAction(40, 	self.goto.hero_wait_right)   	-- human wait right
+	self.hero_mc:setGotoAction(80, 	self.goto.hero_wait_left)  		-- human wait left
+	self.hero_mc:setGotoAction(120, self.goto.hero_wait_right)  	-- human fire right
+	self.hero_mc:setGotoAction(160, self.goto.hero_wait_left) 		-- human fire left
 	
+	self.hero_mc:setGotoAction(420, self.goto.monster_wait_left) 	-- monster fire left
+	self.hero_mc:setGotoAction(460, self.goto.monster_wait_right) 	-- monster fire right
 	
-	self.hero_mc:setGotoAction(580, 1) -- transform to human
+	self.hero_mc:setGotoAction(620, self.goto.monster_wait_right)  	-- monster wait right
+	self.hero_mc:setGotoAction(660, self.goto.monster_wait_left)  	-- monster wait left
+	
+	self.hero_mc:setStopAction(380) 								-- transform to monster
+	self.hero_mc:setStopAction(580)									-- transform to human
 	
 	self.hero_mc:gotoAndPlay(1)
 	

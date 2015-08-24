@@ -67,7 +67,7 @@ function Timeline:restart(id, Time)
 	timeline.endtime = gt() + Time
 end
 
-function Timeline:stop(id, Time)
+function Timeline:stop(id)
 	self.timelines[id].started = false
 end
 

@@ -1,5 +1,5 @@
 <project>
- <properties mouseToTouch="1" iosDevice="0" fps="60" osx_domain="giderosmobile.com" osx_org="GiderosMobile" autorotation="0" windowHeight="0" win_domain="giderosmobile.com" encryptCode="0" win_org="GiderosMobile" logicalHeight="1920" mouseTouchOrder="0" architecture="0" scaleMode="0" orientation="3" encryptAssets="0" packageName="com.yourdomain.yourapp" touchToMouse="1" logicalWidth="1080" windowWidth="0" retinaDisplay="0" assetsOnly="0" android_template="0">
+ <properties encryptAssets="0" orientation="3" osx_org="GiderosMobile" assetsOnly="0" windowWidth="0" encryptCode="0" android_template="0" scaleMode="0" fps="60" logicalHeight="1920" packageName="com.yourdomain.yourapp" autorotation="0" iosDevice="0" touchToMouse="1" architecture="0" logicalWidth="1080" retinaDisplay="0" osx_domain="giderosmobile.com" mouseToTouch="1" win_domain="giderosmobile.com" win_org="GiderosMobile" windowHeight="0" mouseTouchOrder="0">
   <imageScales/>
  </properties>
  <folder name="assets">
@@ -18,8 +18,7 @@
    </folder>
   </folder>
   <folder name="images">
-   <file source="assets/images/skull.png"/>
-   <file source="assets/images/heart.png"/>
+   <file source="assets/images/12_1.png"/>
    <file source="assets/images/AI_blue_fall.png"/>
    <file source="assets/images/AI_blue_fight_foot.png"/>
    <file source="assets/images/AI_blue_fight_hand.png"/>
@@ -42,10 +41,13 @@
    <file source="assets/images/crowd.png"/>
    <file source="assets/images/game_over_bg.png"/>
    <file source="assets/images/gameover_text.png"/>
+   <file source="assets/images/heart.png"/>
    <file source="assets/images/level_bg.png"/>
    <file source="assets/images/level_bg_day.png"/>
    <file source="assets/images/menu_bg.png"/>
    <file source="assets/images/retry_button.png"/>
+   <file source="assets/images/shadow.png"/>
+   <file source="assets/images/skull.png"/>
    <file source="assets/images/start_button.png"/>
   </folder>
   <folder name="sounds"/>

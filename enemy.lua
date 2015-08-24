@@ -9,7 +9,7 @@ Enemy = Core.class(Sprite)
 	color - (blue/red)
 	middle 
 	speed
-	start_attack
+	startAttack
 --]]
 
 function Enemy:init(options)
@@ -21,7 +21,7 @@ function Enemy:init(options)
 	self.color = options.color
 	self.speed = options.speed
 	self.is_attack = false
-	self.start_attack = options.start_attack
+	self.startAttack = options.startAttack
 	
 	local enemy_blue_wait_spritesheet 	= Texture.new("assets/images/AI_blue_wait.png")
 	local enemy_red_wait_spritesheet 	= Texture.new("assets/images/AI_red_wait.png")
@@ -143,17 +143,17 @@ function Enemy:init(options)
 		{41, 60, animation[3]},
 		{61, 80, animation[4]},
 		-- blue fly
-		{81,  100, animation[5]},
-		{101, 120, animation[6]},
-		{121, 140, animation[7]},
-		{141, 160, animation[8]},
-		{161, 180, animation[9], {y = {0, -1000, "linear"}}, {alpha = {0, 1, "easeOut"}}},
+		{81,  90, animation[5]},
+		{91, 100, animation[6]},
+		{101, 110, animation[7]},
+		{111, 120, animation[8]},
+		{121, 130, animation[9], {y = {0, -1000, "linear"}}, {alpha = {0, 1, "easeOut"}}},
 		-- red fly
-		{181, 200, animation[10]},
-		{201, 220, animation[11]},
-		{221, 240, animation[12]},
-		{241, 260, animation[13]},
-		{261, 280, animation[14], {y = {0, -1000, "linear"}}, {alpha = {0, 1, "easeOut"}}},
+		{131, 140, animation[10]},
+		{141, 150, animation[11]},
+		{151, 160, animation[12]},
+		{161, 170, animation[13]},
+		{171, 180, animation[14], {y = {0, -1000, "linear"}}, {alpha = {0, 1, "easeOut"}}},
 		-- blue fall 
 		{281, 290, animation[15]},
 		{291, 300, animation[16]},
@@ -224,23 +224,41 @@ function Enemy:init(options)
 		{706, 710, animation[76]},
 	}
 	
-	self.enemy_mc:setGotoAction(40, 1)  -- blue wait
-	self.enemy_mc:setGotoAction(80, 41) -- red wait
+	self.goto = {
+		blue_wait = 1,
+		blue_fall = 281,
+		blue_fly = 81,
+		blue_fight_foot = 521,
+		blue_fight_hand = 661,
+		
+		red_wait = 41,
+		red_fall = 401,
+		red_fly = 131,
+		red_fight_foot = 591,
+		red_fight_hand = 686,
+	}
 	
-	self.enemy_mc:setStopAction(180)
-	self.enemy_mc:setStopAction(280)
-	self.enemy_mc:setStopAction(400)
-	self.enemy_mc:setStopAction(520)
 	
-	self.enemy_mc:setGotoAction(590, 661)
-	self.enemy_mc:setGotoAction(685, 521)
-	self.enemy_mc:setGotoAction(660, 686)
-	self.enemy_mc:setGotoAction(710, 591)
+	self.enemy_mc:setGotoAction(40, self.goto.blue_wait)  	-- blue wait
+	self.enemy_mc:setGotoAction(80, self.goto.red_wait) 	-- red wait
+	
+	
+	self.enemy_mc:setStopAction(130) -- blue fly
+	self.enemy_mc:setStopAction(180) -- red fly
+	self.enemy_mc:setStopAction(400) -- blue fall
+	self.enemy_mc:setStopAction(520) -- red fall
+	
+	
+	self.enemy_mc:setGotoAction(590, self.goto.blue_fight_hand) 	-- blue fight foot to hand
+	self.enemy_mc:setGotoAction(685, self.goto.blue_fight_foot) 	-- blue fight hand to foot
+	self.enemy_mc:setGotoAction(660, self.goto.red_fight_hand) 		-- red fight foot to hand
+	self.enemy_mc:setGotoAction(710, self.goto.red_fight_foot) 		-- red fight hand to foot
+	
 	
 	if self.color == "blue" then
-		self.enemy_mc:gotoAndPlay(1)
+		self.enemy_mc:gotoAndPlay(self.goto.blue_wait)
 	elseif self.color == "red" then
-		self.enemy_mc:gotoAndPlay(41)
+		self.enemy_mc:gotoAndPlay(self.goto.red_wait)
 	end
 	
 	
@@ -270,14 +288,14 @@ function Enemy:onEnterFrame(event)
 				
 				local frame = 1
 				if self.color == "blue" then
-					frame = _chooseBetweenTwoValue(521, 661) -- foot
+					frame = _chooseBetweenTwoValue(self.goto.blue_fight_foot, self.goto.blue_fight_hand)
 				else 
-					frame = _chooseBetweenTwoValue(591, 686) -- hand
+					frame = _chooseBetweenTwoValue(self.goto.red_fight_foot, self.goto.red_fight_hand)
 				end
 				self.enemy_mc:gotoAndPlay(frame)
 				
 				self.is_attack = true
-				self.start_attack(self.direction, self.level)
+				self.startAttack(self.direction, self.level)
 			end
 		end
 		
