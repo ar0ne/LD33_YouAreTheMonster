@@ -3,8 +3,8 @@ MenuScene = Core.class(Sprite)
 function MenuScene:init()
 
 	self.bg = Bitmap.new(Texture.new("assets/images/menu_bg.png"))
-	
-	self.bg:setScale(conf.MENU_BG_SCALE_X, conf.MENU_BG_SCALE_Y)
+	local scaleFactor = conf.SCREENW / self.bg:getWidth()
+	self.bg:setScale(scaleFactor, scaleFactor)
 	self.bg:setAnchorPoint(0.5, 0.5)
 
 	self.bg:setPosition(conf.SCREENW / 2, conf.SCREENH / 2)
@@ -13,7 +13,7 @@ function MenuScene:init()
 	local start_button_bitmap = Bitmap.new(Texture.new("assets/images/start_button.png"))
 
 	start_button_bitmap:setAnchorPoint(0.5, 0.5)
-	start_button_bitmap:setScale(conf.START_BUTTON_SCALE, conf.START_BUTTON_SCALE)
+	start_button_bitmap:setScale(scaleFactor, scaleFactor)
 	start_button_bitmap:setPosition(conf.SCREENW / 2, conf.SCREENH * 3 / 4)
 
 	local start_button = Button.new(start_button_bitmap)
@@ -36,7 +36,7 @@ function MenuScene:init()
 	local logo = Bitmap.new(Texture.new("assets/images/Logo.png"))
 	
 	logo:setAnchorPoint(0.5, 0.5)
-	logo:setScale(conf.LOGO_SCALE, conf.LOGO_SCALE)
+	logo:setScale(scaleFactor, scaleFactor)
 	logo:setPosition(conf.SCREENW / 2, conf.SCREENH / 2)
 	
 	self:addChild(logo)
