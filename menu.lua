@@ -24,7 +24,7 @@ function MenuScene:init()
 
 	start_button:addEventListener("click", function()
 		self.gametune:stop()
-		sceneManager:changeScene("level", conf.TRANSITION_TIME,  SceneManager.fade)
+		sceneManager:changeScene("tutorial", conf.TRANSITION_TIME,  SceneManager.fade)
 	end)
 	
 	local stars = Stars.new({

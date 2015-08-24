@@ -85,7 +85,7 @@ function LevelScene:init()
 	self.crowd_left = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = 400,
+		pos_x = config.SCREENW / 2 - 300,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	
@@ -94,7 +94,7 @@ function LevelScene:init()
 	self.crowd_right = Crowd.new({
 		level = self,
 		scale = config.CROWD_SCALE,
-		pos_x = config.SCREENW - 400,
+		pos_x = config.SCREENW / 2 + 300,
 		pos_y = config.SCREENH * 2 / 3,
 	})
 	

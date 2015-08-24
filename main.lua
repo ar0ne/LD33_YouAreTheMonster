@@ -2,6 +2,7 @@ application:setOrientation(application.LANDSCAPE_RIGHT)
 
 sceneManager = SceneManager.new({
 	["level"]  		= LevelScene,
+	["tutorial"]  		= Tutorial,
     ["menu"]   		= MenuScene,    
 	["game_over"] 	= GameOver
 })

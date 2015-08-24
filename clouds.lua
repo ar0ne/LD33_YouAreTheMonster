@@ -22,8 +22,9 @@ function Clouds:init( options )
 	}
 	
 	for i = 1, #self.clouds do 
+		local scaleFactor = self.screen_width / self.clouds[i]:getWidth()
 		self.clouds[i]:setAnchorPosition(0, 0)
-		self.clouds[i]:setScale(options.scale_x, options.scale_y)
+		self.clouds[i]:setScale(scaleFactor, scaleFactor)
 		self.clouds[i]:setPosition((i - 2) * self.screen_width, 0)
 		self.clouds[i]:setAlpha(options.alpha)
 		self:addChild(self.clouds[i])
