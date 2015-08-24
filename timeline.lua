@@ -97,7 +97,7 @@ function Timeline:onEnterFrame()
 				self.scene:addChild(timeline[i].fullshape)
 				if timeline[i].callback ~= nil and timeline[i].ended == false then
 					timeline[i].ended = true
-					timeline[i].callback(self)
+					timeline[i].callback(self, self.scene)
 				end
 			end
 		end

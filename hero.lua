@@ -97,8 +97,8 @@ function Hero:init(options)
 	
 	self.hero_mc:setGotoAction(40, 	1)   -- human wait right
 	self.hero_mc:setGotoAction(80, 	41)  -- human wait left
-	self.hero_mc:setGotoAction(120, 81)  -- human fire right
-	self.hero_mc:setGotoAction(160, 121) -- human fire left
+	self.hero_mc:setGotoAction(120, 1)  -- human fire right
+	self.hero_mc:setGotoAction(160, 41) -- human fire left
 	self.hero_mc:setGotoAction(420, 381) -- monster fire left
 	self.hero_mc:setGotoAction(460, 421) -- monster fire right
 	

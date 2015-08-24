@@ -1,8 +1,7 @@
 <project>
- <properties win_domain="giderosmobile.com" touchToMouse="1" packageName="com.yourdomain.yourapp" orientation="3" windowWidth="0" retinaDisplay="0" autorotation="0" assetsOnly="0" osx_org="GiderosMobile" win_org="GiderosMobile" logicalWidth="1080" fps="60" android_template="0" mouseTouchOrder="0" osx_domain="giderosmobile.com" encryptAssets="0" architecture="0" windowHeight="0" encryptCode="0" logicalHeight="1920" scaleMode="0" mouseToTouch="1" iosDevice="0">
+ <properties mouseToTouch="1" iosDevice="0" fps="60" osx_domain="giderosmobile.com" osx_org="GiderosMobile" autorotation="0" windowHeight="0" win_domain="giderosmobile.com" encryptCode="0" win_org="GiderosMobile" logicalHeight="1920" mouseTouchOrder="0" architecture="0" scaleMode="0" orientation="3" encryptAssets="0" packageName="com.yourdomain.yourapp" touchToMouse="1" logicalWidth="1080" windowWidth="0" retinaDisplay="0" assetsOnly="0" android_template="0">
   <imageScales/>
  </properties>
- <file source="crowd.lua"/>
  <folder name="assets">
   <folder name="fonts">
    <folder name="big">
@@ -19,6 +18,8 @@
    </folder>
   </folder>
   <folder name="images">
+   <file source="assets/images/skull.png"/>
+   <file source="assets/images/heart.png"/>
    <file source="assets/images/AI_blue_fall.png"/>
    <file source="assets/images/AI_blue_fight_foot.png"/>
    <file source="assets/images/AI_blue_fight_hand.png"/>
@@ -49,16 +50,20 @@
   </folder>
   <folder name="sounds"/>
  </folder>
+ <file source="LD33.gproj"/>
  <file source="background.lua"/>
  <file source="button.lua"/>
  <file source="clouds.lua"/>
  <file source="config.lua"/>
+ <file source="crowd.lua"/>
  <file source="easing.lua"/>
  <file source="enemy.lua"/>
+ <file source="game_over.lua"/>
  <file source="gestures.lua"/>
  <file source="gtween.lua"/>
  <file source="hero.lua"/>
  <file source="level.lua"/>
+ <file source="lives.lua"/>
  <file source="main.lua"/>
  <file source="menu.lua"/>
  <file source="scenemanager.lua"/>
