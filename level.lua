@@ -639,3 +639,4 @@ function LevelScene.startTimer(direction, self)
 		--end
 	end
 end
+

@@ -19,6 +19,8 @@
    </folder>
   </folder>
   <folder name="images">
+   <file source="assets/images/Tutorial_02.png"/>
+   <file source="assets/images/Tutorial_01.png"/>
    <file source="assets/images/12_1.png"/>
    <file source="assets/images/AI_blue_fall.png"/>
    <file source="assets/images/AI_blue_fight_foot.png"/>
@@ -78,4 +80,5 @@
  <file source="score.lua"/>
  <file source="stars.lua"/>
  <file source="timeline.lua"/>
+  <file source="tutorial.lua"/>
 </project>
