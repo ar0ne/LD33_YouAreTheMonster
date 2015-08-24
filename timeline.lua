@@ -25,9 +25,6 @@ function Timeline:addLine (id, X, Y, W, H, callback)
 	line.ended = false
 	
 	self.timelines[id] = line
-end
-
-function Timeline:start(id, Time)
 	local timeline = self.timelines[id]
 	timeline.shape = shape.new()
 	timeline.shape:setFillStyle(Shape.SOLID, 0xFDE3A7, 1)
@@ -41,6 +38,11 @@ function Timeline:start(id, Time)
 	timeline.shape:setPosition(timeline.x, timeline.y)
 	self.scene:addChild(timeline.shape)
 	
+end
+
+function Timeline:start(id, Time)
+	
+	local timeline = self.timelines[id]
 	timeline.fullshape = shape.new()
 	timeline.fullshape:setFillStyle(Shape.SOLID, 0xF89406, 1)
 	timeline.fullshape:beginPath()
