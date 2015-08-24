@@ -9,6 +9,7 @@ Enemy = Core.class(Sprite)
 	color - (blue/red)
 	middle 
 	speed
+	start_attack
 --]]
 
 function Enemy:init(options)
@@ -16,9 +17,11 @@ function Enemy:init(options)
 	self.level = options.level
 	self.paused = false
 	self.direction = options.direction
-	self.middle = options.middle
+	self.border = options.border
 	self.color = options.color
 	self.speed = options.speed
+	self.is_attack = false
+	self.start_attack = options.start_attack
 	
 	local enemy_blue_wait_spritesheet 	= Texture.new("assets/images/AI_blue_wait.png")
 	local enemy_red_wait_spritesheet 	= Texture.new("assets/images/AI_red_wait.png")
@@ -229,10 +232,10 @@ function Enemy:init(options)
 	self.enemy_mc:setStopAction(400)
 	self.enemy_mc:setStopAction(520)
 	
-	self.enemy_mc:setGotoAction(590, 521)
-	self.enemy_mc:setGotoAction(660, 591)
-	self.enemy_mc:setGotoAction(685, 661)
-	self.enemy_mc:setGotoAction(710, 686)
+	self.enemy_mc:setGotoAction(590, 661)
+	self.enemy_mc:setGotoAction(685, 521)
+	self.enemy_mc:setGotoAction(660, 686)
+	self.enemy_mc:setGotoAction(710, 591)
 	
 	if self.color == "blue" then
 		self.enemy_mc:gotoAndPlay(1)
@@ -243,7 +246,7 @@ function Enemy:init(options)
 	
 	self:addChild(self.enemy_mc)
 	
-	self:setPosition(options.pos_x, options.pos_y)
+	self:setPosition(options.pos_x, options.pos_y, 0.1)
 	
 	---- EVENTS ---- 
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
@@ -255,32 +258,29 @@ function Enemy:onEnterFrame(event)
 	if not self.paused then
 	
 		local x, y = self:getPosition()
-		if self.direction == "right" then
-			x = x + self.speed
-		else
-			x = x - self.speed
-		end
 		
-		if x == self.middle then
-			-- 	сверяем цвет и режим героя
-			-- if self.color ~= self.level.hero.mode then
-			--	
-			
-			self:removeEnemyFromLevel(self.level.enemys_left)
-			self:removeEnemyFromLevel(self.level.enemys_right)
-			
+		if x ~= self.border then 
+			if self.direction == "right" then
+				x = x + self.speed
+			else
+				x = x - self.speed
+			end
+		else
+			if not self.is_attack then
+				
+				local frame = 1
+				if self.color == "blue" then
+					frame = _chooseBetweenTwoValue(521, 661) -- foot
+				else 
+					frame = _chooseBetweenTwoValue(591, 686) -- hand
+				end
+				self.enemy_mc:gotoAndPlay(frame)
+				
+				self.is_attack = true
+				self.start_attack(self.direction, self.level)
+			end
 		end
 		
 		self:setPosition(x, y)
-	end
-end
-
-function Enemy:removeEnemyFromLevel(enemy_array)
-	for i = 1, #enemy_array do
-		if enemy_array[i] == self then
-			table.remove(enemy_array, i)
-			self.level:removeChild(self) -- getParent() doesn't work
-			break
-		end
 	end
 end

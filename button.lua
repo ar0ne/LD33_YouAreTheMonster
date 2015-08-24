@@ -11,10 +11,6 @@ function Button:init(sprite)
 end
 
 function Button:onMouseDown(event)
-	event:stopPropagation()
-end
-
-function Button:onMouseUp(event)
 	
 	if self:hitTestPoint(event.x, event.y) then
 		-- click on button
@@ -22,5 +18,8 @@ function Button:onMouseUp(event)
 		local clickEvent = Event.new("click")
 		self:dispatchEvent(clickEvent)
 	end
-	
+end
+
+function Button:onMouseUp(event)
+	event:stopPropagation()	
 end

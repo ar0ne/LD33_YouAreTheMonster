@@ -11,7 +11,8 @@ function Hero:init(options)
 	
 	self.level = options.level
 	self.paused = true
-	self.isAttack = false
+	self.is_attack = false
+	self.is_demon = false
 	
 	local hero_wait_spritesheet = Texture.new("assets/images/Hero_wait.png")
 	local hero_fire_spritesheet = Texture.new("assets/images/Hero_fire.png")
@@ -89,6 +90,8 @@ function Hero:init(options)
 		{521, 540, animation[21]},
 		{541, 560, animation[22]},
 		{561, 580, animation[23]},
+		
+		-- @TODO: add monster wait animation!!!
 			
 	}
 	
@@ -99,8 +102,11 @@ function Hero:init(options)
 	self.hero_mc:setGotoAction(420, 381) -- monster fire left
 	self.hero_mc:setGotoAction(460, 421) -- monster fire right
 	
+	-- @TODO: set goto to wait monster
 	self.hero_mc:setStopAction(380) -- transform to monster
-	self.hero_mc:setStopAction(580) -- transform to human
+	
+	
+	self.hero_mc:setGotoAction(580, 1) -- transform to human
 	
 	self.hero_mc:gotoAndPlay(1)
 	
@@ -109,5 +115,3 @@ function Hero:init(options)
 	self:setPosition(options.pos_x, options.pos_y)
 	
 end
-
---function Hero:

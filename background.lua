@@ -2,9 +2,7 @@ Background = Core.class(Sprite)
 
 --[[
 	level - reference to parent object
-	image - background image
-	bg_scale - image scale
-	
+	image - background image	
 	screen_width
 	screen_height
 --]]

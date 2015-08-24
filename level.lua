@@ -1,7 +1,6 @@
 LevelScene = Core.class(Sprite)
 
 local config = conf
-local en = Enemy
 
 function LevelScene:init()
 	
@@ -22,24 +21,22 @@ function LevelScene:init()
 	self:addChild(self.bg)
 
 	local timelinewidth = config.SCREENW * 0.2
-	local timer = Timeline.new(self);
-	timer:addLine(1, config.SCREENW * 0.1, config.SCREENH*0.1, timelinewidth, 20, self.onLeftTimeEnd)
-	timer:addLine(2, config.SCREENW * 0.9 - timelinewidth, config.SCREENH*0.1, timelinewidth, 20, self.onRightTimeEnd)
-	timer:start(1, 1)
-	timer:start(2, 1)
+	self.timeline = Timeline.new(self);
+	self.timeline:addLine(1, config.SCREENW * 0.1, config.SCREENH*0.1, timelinewidth, 20, self.onLeftTimeEnd)
+	self.timeline:addLine(2, config.SCREENW * 0.9 - timelinewidth, config.SCREENH*0.1, timelinewidth, 20, self.onRightTimeEnd)
 	
 	
 	self.hero = Hero.new({
 		level = self,
 		pos_x = config.SCREENW / 2,
-		pos_y = config.SCREENH * 2 / 3,
+		pos_y = config.SCREENH * 2 / 3 - 15,
 		hero_scale = config.HERO_SCALE
 	})
 	
 	self:addChild(self.hero)
 	
-	self.enemys_left = {}
-	self.enemys_right = {}
+	self.enemy_left = nil
+	self.enemy_right = nil
 	
 	self.score = Score.new({
 		level = self,
@@ -65,9 +62,26 @@ function LevelScene:init()
 		alpha = config.STARS_ALPHA
 	})
 		
-	--self:addChild(self.stars)	
+	self:addChild(self.stars)	
+	self.stars:setVisible(false)
 	
+	self.crowd_left = Crowd.new({
+		level = self,
+		scale = config.CROWD_SCALE,
+		pos_x = 400,
+		pos_y = config.SCREENH * 2 / 3,
+	})
 	
+	self:addChild(self.crowd_left)
+	
+	self.crowd_right = Crowd.new({
+		level = self,
+		scale = config.CROWD_SCALE,
+		pos_x = config.SCREENW - 400,
+		pos_y = config.SCREENH * 2 / 3,
+	})
+	
+	self:addChild(self.crowd_right)
 	
 	
 	---- EVENTS ------
@@ -77,7 +91,7 @@ function LevelScene:init()
 
 end
 
-local function _chooseBetweenTwoValue(val_1, val_2)
+function _chooseBetweenTwoValue(val_1, val_2)
 
 	if math.random(0, 1000) > 500 then
 		return val_1
@@ -87,25 +101,45 @@ local function _chooseBetweenTwoValue(val_1, val_2)
 end
 
 function LevelScene.onLeftTimeEnd(timer)
-	timer:start(1, 2)
+
+	local live_count = self.lives:getLiveCount("LEFT")
+	if live_count > 0 then
+		self.lives:decrement("LEFT")
+		timer:start(1, 5)
+	elseif live_count == 0 then
+		self:switchToMonsterMode()
+	end
 end
 
 function LevelScene.onRightTimeEnd(timer)
-	timer:start(2, 2)
+	local live_count = self.lives:getLiveCount("RIGHT")
+	if live_count > 1 then
+		self.lives:decrement("RIGHT")
+		timer:start(2, 5)
+	elseif live_count <= 1  then
+		self:switchToMonsterMode()
+	end
+end
+
+function LevelScene:switchToMonsterMode()
+	self.hero:gotoAndPlay(461)
+	self:removeChild(self.enemy_left)
+	self:removeChild(self.enemy_right)
+	self.enemy_left, self.enemy_right = nil, nil
+	-- @TODO: сбить счётчики жизней
+	
 end
 
 function LevelScene:onEnterFrame(event)
 
 	if not self.paused then
-		if #self.enemys_left < config.MAX_ENEMY_COUNT then
-			local enemy = self:generateRandomEnemies("left")
-			self.enemys_left[#self.enemys_left + 1] = enemy
-			self:addChild(enemy)
+		if not self.enemy_left then
+			self.enemy_left = self:generateRandomEnemies("left")
+			self:addChild(self.enemy_left)
 		end
-		if #self.enemys_right < config.MAX_ENEMY_COUNT then
-			local enemy = self:generateRandomEnemies("right")
-			self.enemys_right[#self.enemys_right + 1] = enemy
-			self:addChild(enemy)
+		if not self.enemy_right then
+			self.enemy_right = self:generateRandomEnemies("right")
+			self:addChild(self.enemy_right)
 		end 
 	end
 	
@@ -154,14 +188,232 @@ function LevelScene.onSwype (touch, self)
 			animate.x = 0
 			local tween = tween.new(self, config.CAM_SPEED, animate, properties)
 		end
+		
 	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("left top")
+		------ LEFT TOP ------
+		-- режим человека
+		if not self.hero.is_demon then
+			self.hero_mc:gotoAndPlay(121)
+			if self.enemy_left.color == "blue" then
+				-- если прав
+				self.enemy_left:gotoAndPlay(81) -- blue fly
+				self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_left)
+					self.enemy_left = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("LEFT") > 1 then
+					self.lives:decrement("LEFT")
+					self.timeline:start(1, 5)
+					self.enemy_left:gotoAndPlay(181) -- red fly
+					self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_left)
+						self.enemy_left = nil
+					end)
+				else
+				-- жизни кончились
+					self:switchToMonsterMode()
+				end
+			end
+		else
+		-- режим монстра
+			self.hero_mc:gotoAndPlay(381)
+			if self.enemy_left.color == "red" then
+				-- если прав
+				self.enemy_left:gotoAndPlay(181) -- red fly
+				self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_left)
+					self.enemy_left = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("LEFT") > 1 then
+					self.lives:decrement("LEFT")
+					self.timeline:start(1, 5)
+					self.enemy_left:gotoAndPlay(81) -- blue fly
+					self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_left)
+						self.enemy_left = nil
+					end)
+				else
+				-- жизни кончились
+					sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
+				end
+			end
+		end
+		
 	elseif sX >= -config.SCREENW / 2 and sX <= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("left bottom")
+		------ LEFT BOTTOM ------
+		-- режим человека
+		if not self.hero.is_demon then
+			self.hero_mc:gotoAndPlay(121)
+			if self.enemy_left.color == "red" then
+				-- если прав
+				self.enemy_left:gotoAndPlay(401) -- red fall
+				self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_left)
+					self.enemy_left = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("LEFT") > 1 then
+					self.lives:decrement("LEFT")
+					self.timeline:start(1, 5)
+					self.enemy_left:gotoAndPlay(521) -- blue fall
+					self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_left)
+						self.enemy_left = nil
+				end)
+				else
+				-- жизни кончились
+					self:switchToMonsterMode()
+				end
+			end
+		else
+		-- режим монстра
+			self.hero_mc:gotoAndPlay(381)
+			if self.enemy_left.color == "blue" then
+				-- если прав
+				self.enemy_left:gotoAndPlay(521) -- blue fall
+				self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_left)
+					self.enemy_left = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("LEFT") > 1 then
+					self.lives:decrement("LEFT")
+					self.timeline:start(1, 5)
+					self.enemy_left:gotoAndPlay(401) -- red fall
+					self.enemy_left.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_left)
+						self.enemy_left = nil
+					end)
+				else
+				-- жизни кончились
+					sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
+				end
+			end
+		end
 	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY > config.SCREENH / 3 then
 		print("right top")
+		------ RIGHT TOP ------
+		-- режим человека
+		if not self.hero.is_demon then
+			self.hero_mc:gotoAndPlay(81)
+			if self.enemy_right.color == "red" then
+				-- если прав
+				self.enemy_right:gotoAndPlay(181) -- red fly
+				self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_right)
+					self.enemy_right = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("RIGHT") > 1 then
+					self.lives:decrement("RIGHT")
+					self.timeline:start(1, 5)
+					self.enemy_right:gotoAndPlay(81) -- blue fly
+					self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_right)
+						self.enemy_right = nil
+					end)
+				else
+				-- жизни кончились
+					self:switchToMonsterMode()
+				end
+			end
+		else
+		-- режим монстра
+			self.hero_mc:gotoAndPlay(421)
+			if self.enemy_right.color == "blue" then
+				-- если прав
+				self.enemy_right:gotoAndPlay(81) -- blue fly
+				self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_right)
+					self.enemy_right = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("RIGHT") > 1 then
+					self.lives:decrement("RIGHT")
+					self.timeline:start(1, 5)
+					self.enemy_right:gotoAndPlay(181) -- red fly
+					self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_right)
+						self.enemy_right = nil
+					end)
+				else
+				-- жизни кончились
+					sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
+				end
+			end
+		end
 	elseif sX <= config.SCREENW * 1.5 and sX >= config.SCREENW / 2  and dX >= -config.SCREENW / 20 and dX <= config.SCREENW / 20 and dY < -config.SCREENH / 3 then
 		print("right bottom")
+		------ RIGHT BOTTOM ------
+		-- режим человека
+		if not self.hero.is_demon then
+			self.hero_mc:gotoAndPlay(81)
+			if self.enemy_right.color == "blue" then
+				-- если прав
+				self.enemy_right:gotoAndPlay(281) -- blue fall
+				self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_right)
+					self.enemy_right = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("RIGHT") > 1 then
+					self.lives:decrement("RIGHT")
+					self.timeline:start(1, 5)
+					self.enemy_right:gotoAndPlay(401) -- red fall
+					self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_right)
+						self.enemy_right = nil
+					end)
+				else
+				-- жизни кончились
+					self:switchToMonsterMode()
+				end
+			end
+		else
+		-- режим монстра
+			self.hero_mc:gotoAndPlay(421)
+			if self.enemy_right.color == "red" then
+				-- если прав
+				self.enemy_right:gotoAndPlay(401) -- red fall
+				self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+					self:removeChild(self.enemy_right)
+					self.enemy_right = nil
+				end)
+			else
+				-- если ошибся
+				-- ecли жизни есть
+				if self.lives:getLiveCount("RIGHT") > 1 then
+					self.lives:decrement("RIGHT")
+					self.timeline:start(1, 5)
+					self.enemy_right:gotoAndPlay(281) -- blue fall
+					self.enemy_right.enemy_mc:addEventListener(Event.COMPLETE, function() 
+						self:removeChild(self.enemy_right)
+						self.enemy_right = nil
+					end)
+				else
+				-- жизни кончились
+					sceneManager:changeScene("game_over", conf.TRANSITION_TIME,  SceneManager.fade)
+				end
+			end
+		end
 	end
 end
 
@@ -171,23 +423,37 @@ function LevelScene:generateRandomEnemies(direction)
 	--local direction = self:_chooseBetweenTwoValue("right", "left")
 	
 	local pos_x
+	local border
 	if direction == "right" then
-		pos_x = 100
+		pos_x = 200
+		border = config.SCREENW / 2 - conf.OFFSET_ENEMY_ATTACK_POSITION
 	else
-		pos_x = config.SCREENW - 100
+		pos_x = config.SCREENW - 200
+		border = config.SCREENW / 2 + conf.OFFSET_ENEMY_ATTACK_POSITION
 	end
 	
-	local enemy = en.new({
+	local enemy = Enemy.new({
 		level = self,
 		pos_x = pos_x ,
 		pos_y = config.SCREENH * 2 / 3,
 		enemy_scale = config.ENEMY_SCALE,
 		direction = direction,
 		color = color,
-		middle = config.SCREENW / 2,
-		speed = config.ENEMY_SPEED
+		border = border,
+		speed = config.ENEMY_SPEED,
+		start_attack = self.startTimer
 	})
 	
 	return enemy
 
+end
+
+function LevelScene.startTimer(direction, self)
+	if direction == "right" then
+		print("Start right timer")
+		self.timeline:start(2, 5)
+	elseif direction == "left" then
+		print("Start left timer")
+		self.timeline:start(1, 5)
+	end
 end
