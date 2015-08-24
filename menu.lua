@@ -1,6 +1,8 @@
 MenuScene = Core.class(Sprite)
 
 function MenuScene:init()
+	self.gametune = Sound.new("assets/sounds/Menu.mp3"):play()
+	self.gametune:addEventListener("complete", MenuScene.PlaySound, self)
 
 	self.bg = Bitmap.new(Texture.new("assets/images/menu_bg.png"))
 	local scaleFactor = conf.SCREENW / self.bg:getWidth()
@@ -21,6 +23,7 @@ function MenuScene:init()
 	self:addChild(start_button)
 
 	start_button:addEventListener("click", function()
+		self.gametune:stop()
 		sceneManager:changeScene("level", conf.TRANSITION_TIME,  SceneManager.fade)
 	end)
 	
@@ -45,6 +48,11 @@ function MenuScene:init()
 	---- EVENTS ----
 	self:addEventListener(Event.ENTER_FRAME, self.onEnterFrame, self)
 	self:addEventListener(Event.KEY_DOWN, self.onKeyDown, self)
+end
+
+function MenuScene:PlaySound()
+	self.gametune = Sound.new("assets/sounds/Menu.mp3"):play()
+	self.gametune:addEventListener("complete", MenuScene.PlaySound, self)
 end
 
 function MenuScene:onEnterFrame(event)

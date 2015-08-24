@@ -1,7 +1,8 @@
 GameOver = Core.class(Sprite)
 
 function GameOver:init(last_score)
-		
+	self.gametune = Sound.new("assets/sounds/Game_over.mp3"):play()
+	
 	local bg = Bitmap.new(Texture.new("assets/images/game_over_bg.png"))
 	local scaleFactor = conf.SCREENW / bg:getWidth()
 	bg:setScale(scaleFactor, scaleFactor)
