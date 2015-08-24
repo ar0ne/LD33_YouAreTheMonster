@@ -28,6 +28,11 @@ function Crowd:init(opt)
 		crowd_anim[i]:setScale(opt.scale, opt.scale)
 	end
 	
+	local shadow_spritesheet = Bitmap.new(Texture.new("assets/images/shadow.png"))
+	shadow_spritesheet:setAnchorPoint(0.5, 0.4)
+	shadow_spritesheet:setScale(opt.scale * 5, opt.scale)
+	self:addChild(shadow_spritesheet)
+	
 	self.crowd_mc = MovieClip.new {
 		{ 1, 10, crowd_anim[1]},
 		{11, 20, crowd_anim[2]},

@@ -48,7 +48,6 @@ function Hero:init(options)
 		
 		-- @TODO: add to hero_transform_pack
 		Bitmap.new(TextureRegion.new(monster_wait_spritesheet_frame_2, 0, 0, 50, 50)),
-
 		
 	}
 	
@@ -56,6 +55,12 @@ function Hero:init(options)
 		animation[i]:setScale(options.hero_scale)
 		animation[i]:setAnchorPoint(0.5, 0.5)
 	end
+	
+	local shadow_spritesheet = Bitmap.new(Texture.new("assets/images/shadow.png"))
+	shadow_spritesheet:setAnchorPoint(0.45, 0.4)
+	shadow_spritesheet:setScale(options.hero_scale, options.hero_scale)
+	self:addChild(shadow_spritesheet)
+	
 	
 	self.hero_mc = MovieClip.new{
 		-- wait right

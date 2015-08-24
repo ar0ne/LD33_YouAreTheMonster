@@ -35,6 +35,11 @@ function Enemy:init(options)
 	local enemy_blue_fight_hand_spritesheet = Texture.new("assets/images/AI_blue_fight_hand.png")
 	local enemy_red_fight_hand_spritesheet = Texture.new("assets/images/AI_red_fight_hand.png")
 	
+	local enemy_shadow_spritesheet = Bitmap.new(Texture.new("assets/images/shadow.png"))
+	enemy_shadow_spritesheet:setAnchorPoint(0.45, 0.4)
+	enemy_shadow_spritesheet:setScale(options.enemy_scale, options.enemy_scale)
+	self:addChild(enemy_shadow_spritesheet)
+	
 	local animation = {
 	
 		Bitmap.new(TextureRegion.new(enemy_blue_wait_spritesheet,  0, 0, 50, 50)),
